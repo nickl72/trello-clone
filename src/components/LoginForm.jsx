@@ -23,19 +23,29 @@ class LoginForm extends Component {
     constructor(props) {
         super(props)
 
-        this.user = {}
+        this.state = {
+            username: null,
+            password: null
+        }
+
     }
 
     login = (e) => {
         e.preventDefault();
     }
 
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {
         return (
             <Div>
                 <Form>
-                    <input type='text' placeholder='Username'/>
-                    <input type='password' placeholder='Password'/>
+                    <input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username}/>
+                    <input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <input type='submit' value='Log In' onClick={(e) => this.login(e)}/>
                 </Form>
             </Div>
