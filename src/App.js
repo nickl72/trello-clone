@@ -6,18 +6,21 @@ import NewTaskForm from './components/NewTaskForm';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+import data from './data';
+
 class App extends Component{
   constructor(props){
     super(props);
 
     this.state ={
-      users: [],
+      users: data.users,
       user: null,
-      tasks: []
+      tasks: data.tasks
     }
     
   }
-  handleCreateTask = (newTask) => {
+  handleCreateTask = (e,newTask) => {
+    e.preventDefault();
     this.state.tasks.push(newTask);
   }
   render(){

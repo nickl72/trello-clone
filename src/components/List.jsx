@@ -24,6 +24,7 @@ class List extends Component {
         return(
             <div>
                 <h2>{this.state.category}</h2>
+                {listItems}
             </div>
         )
     }

@@ -20,7 +20,7 @@ class NewTaskForm extends Component{
 
     render(){
         return(
-            <form onSubmit={() => {this.props.handleCreateTask(this.state)}}>
+            <form onSubmit={(e) => {this.props.handleCreateTask(e,this.state)}}>
                 <h2>New Task</h2>
                 <label for="title">Task Title:</label>
                 <input type="text" name="title" placeholder="Title"
