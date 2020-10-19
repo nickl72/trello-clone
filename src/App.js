@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import List from './components/List'
+import List from './components/List';
+import NewTaskForm from './components/NewTaskForm';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 class App extends Component{
   constructor(props){
@@ -12,12 +15,10 @@ class App extends Component{
       user: null,
       tasks: []
     }
-
-
-    handleCreateTask = (newTask) => {
-      tasks.push(newTask);
-    }
     
+  }
+  handleCreateTask = (newTask) => {
+    this.state.tasks.push(newTask);
   }
   render(){
     const toDoList = [];

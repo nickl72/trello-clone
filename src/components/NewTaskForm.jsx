@@ -11,13 +11,11 @@ class NewTaskForm extends Component{
             category: "To-Do"
         }
 
-        handleInputChange = (e) => {
-            this.setState({
-                [e.target.name] : e.target.value
-            })
-        }
-
-
+    }
+    handleInputChange = (e) => {
+        this.setState({
+            [e.target.name] : e.target.value
+        })
     }
 
     render(){
@@ -38,7 +36,7 @@ class NewTaskForm extends Component{
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <input type="submit">Create Task</input>
+                <input type="submit" value="Create Task"></input>
             </form>
         )
     }
