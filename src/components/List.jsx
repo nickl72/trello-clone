@@ -14,7 +14,7 @@ function List(props) {
     }
 
     return(
-        <div>
+        <div id={props.category} onMouseEnter={() => {props.onMouseEnter(props.category)}}>
             <h2>{props.category}</h2>
             {listItems}
         </div>
