@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+`
 
 class NewTaskForm extends Component{
     constructor(props){
@@ -20,7 +28,7 @@ class NewTaskForm extends Component{
 
     render(){
         return(
-            <form onSubmit={(e) => {this.props.handleCreateTask(e,this.state)}}>
+            <Form onSubmit={(e) => {this.props.handleCreateTask(e,this.state)}}>
                 <h2>New Task</h2>
                 <label for="title">Task Title:</label>
                 <input type="text" name="title" placeholder="Title"
@@ -37,7 +45,7 @@ class NewTaskForm extends Component{
                     <option value="Completed">Completed</option>
                 </select>
                 <input type="submit" value="Create Task"></input>
-            </form>
+            </Form>
         )
     }
 }
