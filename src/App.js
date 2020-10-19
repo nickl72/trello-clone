@@ -25,6 +25,12 @@ class App extends Component{
         }
     ]
     }
+
+
+    handleCreateTask = (newTask) => {
+      tasks.push(newTask);
+    }
+    
   }
   render(){
     const toDoList = [];
@@ -52,7 +58,8 @@ class App extends Component{
       <div className="App">
         {/* <Header /> */}
         <main>
-          {/* <NewTaskForm /> */}
+
+          <NewTaskForm handleCreateTask={this.handleCreateTask}/>
           <List category={"To-Do"} tasks={toDoList}/>
           <List category={"In Progress"} tasks={inProgressList}/>
           <List category={"Completed"} tasks={completedList}/>
