@@ -1,34 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Task from './Task'
 
-class List extends Component {
-    constructor(props) {
-        super(props);
+function List(props) {
 
-        this.state = {
-            category: props.category,
-            tasks: props.tasks
-        }
+    const listItems = [];
+
+    if(props.tasks) {
+        props.tasks.map((task, id) => (
+            listItems.push(<Task task={task} key={id} />)
+        ))
     }
 
-    render() {
-        const listItems = [];
-
-        if(this.state.tasks) {
-            this.state.tasks.map((task, id) => (
-                listItems.push(<Task task={task} key={id} />)
-            ))
-        }
-
-        return(
-            <div>
-                <h2>{this.state.category}</h2>
-                {listItems}
-            </div>
-        )
-    }
-
+    return(
+        <div>
+            <h2>{props.category}</h2>
+            {listItems}
+        </div>
+    )
 }
 
 
