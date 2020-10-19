@@ -14,14 +14,35 @@ class App extends Component{
     }
   }
   render(){
+    const toDoList = [];
+    const inProgressList = [];
+    const completedList = [];
+    this.state.tasks.map((task, id) => {
+      switch(task.category) {
+        case "To-Do":
+          toDoList.push(task);
+          break;
+        case "In Progress":
+          inProgressList.push(task);
+          break;
+        case "Completed":
+          completedList.push(task);
+          break;
+        default:
+          console.error("Task category not recognized.")
+          console.error(task);
+      }
+      return 0;
+    })
+
     return (
       <div className="App">
         {/* <Header /> */}
         <main>
           {/* <NewTaskForm /> */}
-          <List category={"To-Do"} />
-          <List category={"In Progress"} />
-          <List category={"Completed"} />
+          <List category={"To-Do"} tasks={toDoList}/>
+          <List category={"In Progress"} tasks={inProgressList}/>
+          <List category={"Completed"} tasks={completedList}/>
           
         </main>
         {/* <Footer /> */}

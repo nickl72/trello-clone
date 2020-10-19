@@ -12,8 +12,6 @@ class List extends Component {
         }
     }
 
-
-
     render() {
         const listItems = [];
 
