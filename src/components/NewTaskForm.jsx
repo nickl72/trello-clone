@@ -8,12 +8,7 @@ class NewTaskForm extends Component{
             title: null,
             description: null,
             dueDate: null,
-            category: "toDo"
-        }
-
-
-        handleCreateTask = () => {
-
+            category: "To-Do"
         }
 
         handleInputChange = (e) => {
@@ -27,7 +22,7 @@ class NewTaskForm extends Component{
 
     render(){
         return(
-            <form>
+            <form onSubmit={this.props.onCreateTask}>
                 <label for="title">Task Title:</label>
                 <input type="text" name="title" placeholder="Title"
                     onChange={this.handleInputChange}></input>
@@ -38,9 +33,9 @@ class NewTaskForm extends Component{
                 <input type="date" name="dueDate"
                     onChange={this.handleInputChange}></input>
                 <select name="category" onChange={this.handleInputChange}>
-                    <option value="toDo">To Do</option>
-                    <option value="inProgress">In Progress</option>
-                    <option value="completed">Completed</option>
+                    <option value="To-Do">To-Do</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
                 </select>
                 <input type="submit">Create Task</input>
             </form>
