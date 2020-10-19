@@ -11,13 +11,11 @@ class NewTaskForm extends Component{
             category: "To-Do"
         }
 
-        handleInputChange = (e) => {
-            this.setState({
-                [e.target.name] : e.target.value
-            })
-        }
-
-
+    }
+    handleInputChange = (e) => {
+        this.setState({
+            [e.target.name] : e.target.value
+        })
     }
 
     render(){
