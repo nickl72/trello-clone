@@ -4,7 +4,7 @@ class NewTaskForm extends Component{
     constructor(props){
         super(props);
 
-        this.state ={
+        this.state = {
             title: null,
             description: null,
             dueDate: null,
@@ -22,7 +22,7 @@ class NewTaskForm extends Component{
 
     render(){
         return(
-            <form onSubmit={this.props.onCreateTask}>
+            <form onSubmit={() => {this.props.handleCreateTask(this.state)}}>
                 <label for="title">Task Title:</label>
                 <input type="text" name="title" placeholder="Title"
                     onChange={this.handleInputChange}></input>
