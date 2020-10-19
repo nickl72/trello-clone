@@ -37,9 +37,11 @@ function Task(props) {
     //     }
     // }
     
-    console.log(props)
     return(
-        <Draggable>
+        <Draggable onDrag = {((e,data) => {
+            console.log(e);
+            console.log(data);
+        })}>
             <Card>
                 <h1>{props.task.title}</h1>
                 <p>{props.task.description}</p>

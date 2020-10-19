@@ -22,8 +22,10 @@ class App extends Component{
     this.state ={
       users: data.users,
       user: null,
-      tasks: data.tasks
+      tasks: data.tasks,
     }
+
+    this.activeElement = null;
     
   }
 
@@ -32,6 +34,15 @@ class App extends Component{
     const tasks = this.state.tasks;
     tasks.push(newTask);
     this.setState({tasks})
+  }
+
+  onMouseEnter = (category) => {
+    console.log(category);
+    // this.activeElement = e.target.id;
+  }
+
+  onMouseLeave = () => {
+    console.log(null);
   }
 
   render(){
@@ -66,9 +77,9 @@ class App extends Component{
         <Header />
         <Main>
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
-          <List category={"To-Do"} tasks={toDoList}/>
-          <List category={"In Progress"} tasks={inProgressList}/>
-          <List category={"Completed"} tasks={completedList}/>
+          <List category={"To-Do"} tasks={toDoList} onMouseEnter={this.onMouseEnter}/>
+          <List category={"In Progress"} tasks={inProgressList} onMouseEnter={this.onMouseEnter}/>
+          <List category={"Completed"} tasks={completedList} onMouseEnter={this.onMouseEnter}/>
           
         </Main>
         <Footer />
