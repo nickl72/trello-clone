@@ -25,13 +25,18 @@ class LoginForm extends Component {
 
         this.user = {}
     }
+
+    login = (e) => {
+        e.preventDefault();
+    }
+
     render() {
         return (
             <Div>
                 <Form>
                     <input type='text' placeholder='Username'/>
                     <input type='password' placeholder='Password'/>
-                    <input type='submit' value='Log In' />
+                    <input type='submit' value='Log In' onClick={(e) => this.login(e)}/>
                 </Form>
             </Div>
         )

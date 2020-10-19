@@ -1,8 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const AppFooter = styled.footer`
+    text-align: center;
+`
 
 function Footer() {
     return (
-        <footer>&copy; Not trello 2020</footer>
+        <AppFooter>&copy; Not Trello 2020</AppFooter>
     )
 }
 
