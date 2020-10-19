@@ -16,8 +16,6 @@ Stretch Goals:
 Successful homework completion includes all main goals, and at least one stretch goal.
 
 
-This is definitely a work in progress so please let me (casey) know if this starts becoming way too much work. I want you all challenged but not falling asleep at 2am challenged.
-
 
 [Wireframe](https://wireframe.cc/IheQzG)
 
