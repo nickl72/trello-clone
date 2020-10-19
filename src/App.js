@@ -37,15 +37,15 @@ class App extends Component{
 
     return (
       <div className="App">
-        {/* <Header /> */}
+        <Header />
         <main>
-          {/* <NewTaskForm /> */}
+          <NewTaskForm />
           <List category={"To-Do"} tasks={toDoList}/>
           <List category={"In Progress"} tasks={inProgressList}/>
           <List category={"Completed"} tasks={completedList}/>
           
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }
