@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Draggable from 'react-draggable';
 
 const Card = styled.div`
     display: flex;
@@ -38,17 +39,19 @@ function Task(props) {
     
     console.log(props)
     return(
-        <Card>
-            <h1>{props.task.title}</h1>
-            <p>{props.task.description}</p>
-            <div>
-                <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
-                <p>{props.task.dueDate}</p>
-                
-                {/* {this.whenDue(props.dueDate)} */}
+        <Draggable>
+            <Card>
+                <h1>{props.task.title}</h1>
+                <p>{props.task.description}</p>
+                <div>
+                    <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
+                    <p>{props.task.dueDate}</p>
+                    
+                    {/* {this.whenDue(props.dueDate)} */}
 
-            </div>
-        </Card>
+                </div>
+            </Card>
+        </Draggable>
     )
 }
 
