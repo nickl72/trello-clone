@@ -36,7 +36,7 @@ class NewTaskForm extends Component{
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <input type="submit">Create Task</input>
+                <input type="submit" value="Create Task"></input>
             </form>
         )
     }
