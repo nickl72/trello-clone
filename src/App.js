@@ -16,7 +16,7 @@ class App extends Component{
       <div className="App">
         <Header />
         <main>
-          <NewTask />
+          <NewTaskForm />
           <List category={"toDo"} />
           <List category={"inProgress"} />
           <List category={"completed"} />
