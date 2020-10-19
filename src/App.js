@@ -10,7 +10,20 @@ class App extends Component{
     this.state ={
       users: [],
       user: null,
-      tasks: []
+      tasks: [
+        {
+            title: "Take out trash",
+            description: "Just make it disappear",
+            dueDate: null,
+            category: "To-Do"
+        }, 
+        {
+            title: "Read a book",
+            description: "LIterally any book",
+            dueDate: null,
+            category: "In Progress"
+        }
+    ]
     }
   }
   render(){
@@ -37,15 +50,15 @@ class App extends Component{
 
     return (
       <div className="App">
-        <Header />
+        {/* <Header /> */}
         <main>
-          <NewTaskForm />
+          {/* <NewTaskForm /> */}
           <List category={"To-Do"} tasks={toDoList}/>
           <List category={"In Progress"} tasks={inProgressList}/>
           <List category={"Completed"} tasks={completedList}/>
           
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

@@ -16,6 +16,7 @@ class List extends Component {
         const listItems = [];
 
         if(this.state.tasks) {
+            console.log(this.state.task);
             this.state.tasks.map((task, id) => (
                 listItems.push(<Task task={task} key={id} />)
             ))
@@ -24,6 +25,7 @@ class List extends Component {
         return(
             <div>
                 <h2>{this.state.category}</h2>
+                {listItems}
             </div>
         )
     }
