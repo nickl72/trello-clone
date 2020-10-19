@@ -57,7 +57,7 @@ class App extends Component{
 
     return (
       <div className="App">
-        {/* <Header /> */}
+        <Header />
         <main>
 
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
@@ -66,7 +66,7 @@ class App extends Component{
           <List category={"Completed"} tasks={completedList}/>
           
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }

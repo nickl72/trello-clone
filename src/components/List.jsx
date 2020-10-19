@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 import Task from './Task'
 
-class List extends Component {
-    constructor(props) {
-        super(props);
+const StyledList = styled.div`
+    border: solid black 3px;
+    margin: 10px;
+    height: 70vh;
+    width: 100%;
+    overflow: auto;
+`
 
-        this.state = {
-            category: props.category,
-            tasks: props.tasks
-        }
+
+function List(props) {
+    const listItems = [];
+
+    if(this.state.tasks) {
+        console.log(this.state.task);
+        this.state.tasks.map((task, id) => (
+            listItems.push(<Task task={task} key={id} />)
+        ))
     }
 
-    render() {
-        const listItems = [];
-
-        if(this.state.tasks) {
-            console.log(this.state.task);
-            this.state.tasks.map((task, id) => (
-                listItems.push(<Task task={task} key={id} />)
-            ))
-        }
-
-        return(
-            <div>
-                <h2>{this.state.category}</h2>
-                {listItems}
-            </div>
-        )
-    }
-
+    return(
+        <StyledList>
+            <h2>{props.category}</h2>
+            {listItems}
+        </StyledList>
+    )
 }
 
 
