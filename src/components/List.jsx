@@ -3,11 +3,14 @@ import styled from 'styled-components';
 
 import Task from './Task'
 
+import { useDrop } from 'react-dnd';
+
 
 function List(props) {
-    const [listData, setlistData] = useState({
+    const [listData, setListData] = useState({
         category: props.category,
-        tasks: props
+        tasks: props,
+        droppedTask: null
     })
 
     const ListTitle = styled.h2`
@@ -51,12 +54,44 @@ function List(props) {
 
     if(props.tasks) {
         props.tasks.map((task, id) => (
-            listItems.push(<Task user={props.user} task={task} key={id} handleDeleteTask={props.handleDeleteTask} handleMoveTask={props.handleMoveTask} handleSelectList={props.handleSelectList} catSelected={props.catSelected}/>)
+            listItems.push(
+                <Task 
+                    user={props.user}
+                    task={task} 
+                    key={id} 
+                    handleDeleteTask={props.handleDeleteTask} 
+                    handleMoveTask={props.handleMoveTask} 
+                    handleSelectList={props.handleSelectList} 
+                    catSelected={props.catSelected}
+                    trackDraggedTask={()=>trackDraggedTask(task.title)}
+                />
+            )
         ))
     }
 
+    function trackDraggedTask(taskTitle) {
+        console.log(taskTitle)
+        setListData({
+            category: listData.category,
+            tasks: listData.tasks,
+            droppedTask: taskTitle
+        })
+        return null;
+    }
+
+    const [{isOver},drop] = useDrop({
+        accept: 'task',
+        drop: (innerProps) => props.handleDragTask(innerProps.title,listData.category),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver()
+        })
+    })
+
     return(
-        <div id={props.category} /*onMouseEnter={() => {props.onMouseEnter(props.category)}}*/>
+        <div 
+            ref={drop} 
+            id={props.category}
+        >
             <ListTitle>{props.category}</ListTitle>
             <StyledList>
                 {listItems}
