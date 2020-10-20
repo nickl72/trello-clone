@@ -26,7 +26,8 @@ class App extends Component{
       users: data.users,
       user: null,
       tasks: data.tasks,
-      loginClick: false
+      loginClick: false,
+      notTrello: false
     }
 
     this.activeElement = null;
@@ -126,8 +127,8 @@ class App extends Component{
 
     return (
       <DndProvider backend={HTML5Backend}>
-        <div className="App">
-          <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick}/>
+        <div className={this.state.notTrello ? "App invert" : "App"}>
+          <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick} notTrello={() => this.setState({notTrello: !this.state.notTrello})}/>
           <Main>
             <NewTaskForm handleCreateTask={this.handleCreateTask} user={this.state.user} openLogin={this.openLogin} />
             <List 
@@ -159,7 +160,7 @@ class App extends Component{
             />
             
           </Main>
-          <Footer />
+          <Footer notTrello={() => this.setState({notTrello: !this.state.notTrello})}/>
         </div>
       </DndProvider>
     );
