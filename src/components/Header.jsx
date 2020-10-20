@@ -32,15 +32,15 @@ const Button = styled.button`
 const Header = (props) => {
     const [loginData, setLoginData] = useState({
         loggedIn: false,
-        loginClick: false       
+        // loginClick: false       
     })
 
     const login = (user) => {
         props.login(user)
         setLoginData({
             loggedIn: !loginData.loggedIn,
-            loginClick: false
         })
+        props.updateLoginClick(false);
     }
 
     const handleClick = (e) => {
@@ -49,13 +49,13 @@ const Header = (props) => {
                 props.login(null)
                 setLoginData({
                     loggedIn: false,
-                    loginClick: false
                 })
+                props.updateLoginClick(false);
             } else {
                 setLoginData({
                     loggedIn: loginData.loggedIn,
-                    loginClick: !loginData.loginClick
                 })
+                props.updateLoginClick(!props.loginClick);
             }
         }
     }
@@ -64,7 +64,7 @@ const Header = (props) => {
         <AppHeader>
             <h1>Not Trello</h1>
             <Button onClick={handleClick}>{loginData.loggedIn ? 'Log Out' : 'Log In' }</Button>
-            {loginData.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login}/> : null }
+            {props.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login}/> : null }
         </AppHeader>
     )
 }
