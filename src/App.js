@@ -31,6 +31,7 @@ class App extends Component{
 
   handleCreateTask = (e,newTask) => {
     e.preventDefault();
+    console.log(newTask);
     const tasks = this.state.tasks;
     tasks.push(newTask);
     this.setState({tasks})
@@ -46,13 +47,11 @@ class App extends Component{
   }
 
   render(){
-    console.log(this.state.tasks)
     const toDoList = [];
     const inProgressList = [];
     const completedList = [];
 
     this.state.tasks.map((task, id) => {
-      console.log(task)
       switch(task.category) {
         case "To-Do":
           toDoList.push(task);
@@ -70,8 +69,6 @@ class App extends Component{
       return 0;
     })
 
-    console.log('todolist:')
-    console.log(toDoList)
     return (
       <div className="App">
         <Header />
