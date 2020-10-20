@@ -7,9 +7,9 @@ const headShakeAnimation = keyframes`${headShake}`;
 
 const Form = styled.form`
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     align-items: center;
-    margin: 20px;
+    margin: 15px;
     border: solid #298FCA;
     border-radius: 10px;
     background-color: #E4F0F6;
@@ -32,6 +32,11 @@ const Submit = styled.input`
         background-color: #5BA4CF;
     }
 `
+const FormHeader = styled.h2`
+    text-align: center;
+    margin: 10px;
+`
+
 const Title = styled.input`
     animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"}
 `
@@ -95,8 +100,8 @@ class NewTaskForm extends Component{
     render(){
         return(
             <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
-                <h2>New Task</h2>
-            <label for="title">Task Title:</label> 
+                <FormHeader>New Task</FormHeader>
+                <label for="title">Task Title:</label> 
                 <Title
                     type="text" name="title" placeholder="Title"
                     badTitle={this.badTitle}
@@ -106,7 +111,9 @@ class NewTaskForm extends Component{
                 <br />
                 <label for="description">Task Description:</label>
                 <textarea rows= "5" cols="20" name="description" placeholder="Type description here..."
-                    onChange={this.handleInputChange}></textarea><br />
+                    onChange={this.handleInputChange}>
+                </textarea>
+                <br />
                 <label for="dueDate">Due Date:</label>
                 <Date
                     type="date" name="dueDate"

@@ -13,22 +13,33 @@ function List(props) {
         droppedTask: null
     })
 
-    const ListTitle = styled.h2`
+    const FormHeader = styled.h2`
         text-align: center;
+        margin: 10px;
     `
 
     let categoryStyles = '';
     switch(listData.category) {
         case "To-Do":
-            categoryStyles = 'background: coral;'
+            categoryStyles = `
+                background: #EFB3AB;
+                border: solid #EB5A46;
+
+            `
             
             break;
         case "In Progress":
-            categoryStyles = 'background: lightgreen;'
+            categoryStyles = `
+                background: #F5EA92;
+                border: solid #F2D600;
+            `
 
             break;
         case "Completed":
-            categoryStyles = 'background: gold;'
+            categoryStyles = `
+                background: #90ECC1;
+                border: solid #4CAF54;
+            `
 
             break;
         default:
@@ -38,15 +49,14 @@ function List(props) {
     
     
     const StyledList = styled.div`
-        border: 5px solid rgba(0,0,0,0.3);
-        border-radius: 15px;
-        margin: 5px;
-        height: auto;
+        border-radius: 10px;
+        margin: 15px;
+        height: 95%;
+        min-height: 50vh;
         width: 20vw;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
-        padding: 20px;
         ${categoryStyles}
     `
     
@@ -92,8 +102,8 @@ function List(props) {
             ref={drop} 
             id={props.category}
         >
-            <ListTitle>{props.category}</ListTitle>
             <StyledList>
+                <FormHeader>{props.category}</FormHeader>
                 {listItems}
             </StyledList>
         </div>
