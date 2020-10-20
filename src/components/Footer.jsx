@@ -6,9 +6,9 @@ const AppFooter = styled.footer`
     padding-bottom: 10px;
 `
 
-function Footer() {
+function Footer(props) {
     return (
-        <AppFooter>&copy; Not Trello 2020</AppFooter>
+        <AppFooter className='not-trello' onClick={props.notTrello}>&copy; Not Trello 2020</AppFooter>
     )
 }
 
