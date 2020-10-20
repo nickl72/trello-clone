@@ -37,9 +37,9 @@ function List(props) {
     const StyledList = styled.div`
         border: 5px solid rgba(0,0,0,0.3);
         border-radius: 15px;
-        margin: 20px auto;
+        margin: 5px;
         height: auto;
-        width: 80%;
+        width: 250px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
