@@ -49,7 +49,7 @@ function List(props) {
         border-radius: 10px;
         margin: 15px;
         height: 100%;
-        min-height: 86vh;
+        min-height: 50vh;
         width: 20vw;
         display: flex;
         flex-flow: column nowrap;
@@ -95,22 +95,15 @@ function List(props) {
     })
 
     return(
-<<<<<<< HEAD
-        <StyledList>
-            <FormHeader>{props.category}</FormHeader>
-            {listItems}
-        </StyledList>
-=======
         <div 
             ref={drop} 
             id={props.category}
         >
-            <ListTitle>{props.category}</ListTitle>
             <StyledList>
+                <FormHeader>{props.category}</FormHeader>
                 {listItems}
             </StyledList>
         </div>
->>>>>>> main
     )
 }
 
