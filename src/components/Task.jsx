@@ -10,7 +10,7 @@ const Card = styled.div`
     width: 85%;
     border: solid black 1px;
     min-height: 50px;
-    margin: 20px 10px;
+    margin: 5px auto;
     box-shadow: 0px 0px 8px gray;
     border-radius: 5px;
     background: white;

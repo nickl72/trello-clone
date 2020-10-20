@@ -35,15 +35,15 @@ function List(props) {
     
     
     const StyledList = styled.div`
-        border: 5px solid rgba(0,0,0,0.3);
-        border-radius: 15px;
-        margin: 5px;
+        border: solid rgba(0,0,0,0.3);
+        border-radius: 10px;
+        margin: 15px;
         height: auto;
+        min-height: 70vh;
         width: 20vw;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
-        padding: 20px;
         ${categoryStyles}
     `
     
@@ -57,8 +57,8 @@ function List(props) {
 
     return(
         <div id={props.category} /*onMouseEnter={() => {props.onMouseEnter(props.category)}}*/>
-            <ListTitle>{props.category}</ListTitle>
             <StyledList>
+            <ListTitle>{props.category}</ListTitle>
                 {listItems}
             </StyledList>
         </div>
