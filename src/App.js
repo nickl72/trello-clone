@@ -22,7 +22,7 @@ class App extends Component{
     this.state ={
       users: data.users,
       user: null,
-      tasks: data.tasks,
+      tasks: data.tasks
     }
 
     this.activeElement = null;
@@ -44,6 +44,29 @@ class App extends Component{
   onMouseLeave = () => {
     console.log(null);
   }
+
+  handleDeleteTask = (e, deleteTask) => {
+    e.preventDefault();
+    const tasks = this.state.tasks;
+    const index = tasks.findIndex(t => t.title === deleteTask.title); 
+    tasks.splice(index,1)
+    this.setState({
+      tasks
+    })
+  }
+
+  handleMoveTask = (e, task, cat) => {
+    e.preventDefault();
+    const tasks = this.state.tasks;
+    const index = tasks.findIndex(t => t.title === task.title);
+    tasks[index].category = cat;
+    this.setState({
+      tasks
+    })
+    
+  }
+
+  
 
   render(){
     const toDoList = [];
@@ -73,9 +96,9 @@ class App extends Component{
         <Header />
         <Main>
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
-          <List category={"To-Do"} tasks={toDoList} onMouseEnter={this.onMouseEnter}/>
-          <List category={"In Progress"} tasks={inProgressList} onMouseEnter={this.onMouseEnter}/>
-          <List category={"Completed"} tasks={completedList} onMouseEnter={this.onMouseEnter}/>
+          <List category={"To-Do"} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"In Progress"} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"Completed"} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
           
         </Main>
         <Footer />
