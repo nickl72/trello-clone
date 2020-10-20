@@ -16,12 +16,12 @@ const Card = styled.div`
     background: white;
 
 
-    h1 {
+    h3 {
         width: 100%;
         margin: 0;
         padding: 7px 0 12px 0;
         text-align: center;
-        font-size: 24px;
+        font-size: 18px;
         border-bottom: solid gray 1px;
         border-top: solid 12px lightgray;
         background-color: lightgray;
@@ -133,7 +133,7 @@ function Task(props) {
             // console.log(data);
         })}>
             <Card>
-                <h1>{props.task.title}</h1>
+                <h3>{props.task.title}</h3>
                 
                 <p className="description">{props.task.description}</p>
                 <div className="dueDate">

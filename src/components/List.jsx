@@ -10,8 +10,9 @@ function List(props) {
         tasks: props
     })
 
-    const ListTitle = styled.h2`
+    const FormHeader = styled.h2`
         text-align: center;
+        margin: 10px;
     `
 
     let categoryStyles = '';
@@ -38,7 +39,7 @@ function List(props) {
         border: solid rgba(0,0,0,0.3);
         border-radius: 10px;
         margin: 15px;
-        height: auto;
+        height: 100%;
         min-height: 70vh;
         width: 20vw;
         display: flex;
@@ -56,12 +57,10 @@ function List(props) {
     }
 
     return(
-        <div id={props.category} /*onMouseEnter={() => {props.onMouseEnter(props.category)}}*/>
-            <StyledList>
-            <ListTitle>{props.category}</ListTitle>
-                {listItems}
-            </StyledList>
-        </div>
+        <StyledList>
+            <FormHeader>{props.category}</FormHeader>
+            {listItems}
+        </StyledList>
     )
 }
 

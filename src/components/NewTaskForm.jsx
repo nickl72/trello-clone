@@ -12,6 +12,7 @@ const Form = styled.form`
     border: solid #298FCA;
     border-radius: 10px;
     background-color: #E4F0F6;
+    height: 100%
     min-height: 70vh;
     width: 12vw;
 
@@ -35,7 +36,8 @@ const Submit = styled.input`
     }
 `
 const FormHeader = styled.h2`
-text-align: center;
+    text-align: center;
+    margin: 10px;
 `
 
 const Title = styled.input`
@@ -96,7 +98,7 @@ class NewTaskForm extends Component{
         return(
             <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
                 <FormHeader>New Task</FormHeader>
-            <label for="title">Task Title:</label> 
+                <label for="title">Task Title:</label> 
                 <Title
                     type="text" name="title" placeholder="Title"
                     badTitle={this.badTitle}
@@ -106,7 +108,9 @@ class NewTaskForm extends Component{
                 <br />
                 <label for="description">Task Description:</label>
                 <textarea rows= "5" cols="20" name="description" placeholder="Type description here..."
-                    onChange={this.handleInputChange}></textarea><br />
+                    onChange={this.handleInputChange}>
+                </textarea>
+                <br />
                 <label for="dueDate">Due Date:</label>
                 <Date
                     type="date" name="dueDate"
@@ -119,8 +123,9 @@ class NewTaskForm extends Component{
                     <option value="To-Do">To-Do</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
-                </select><br/>   
-                <Submit type="submit" value="Create Task"></Submit>
+                </select>
+                <br/>   
+                <Submit type="submit" value="Create Task" />
             </Form>
         )
     }
