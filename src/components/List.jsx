@@ -56,6 +56,7 @@ function List(props) {
         props.tasks.map((task, id) => (
             listItems.push(
                 <Task 
+                    user={props.user}
                     task={task} 
                     key={id} 
                     handleDeleteTask={props.handleDeleteTask} 

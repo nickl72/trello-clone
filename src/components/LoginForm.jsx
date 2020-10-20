@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { zoomIn } from 'react-animations';
+
+const slideAnimation = keyframes`${zoomIn}`;
 
 const Div = styled.div`
     position: fixed;
     height: 100%;
     width: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.2);
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.4);
     z-index: 1;
     left: 0;
     top: 0;
@@ -17,6 +20,44 @@ const Div = styled.div`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px black;
+    color: black;
+    text-align: center;
+    animation: ${slideAnimation} .5s;
+`
+
+const Input = styled.input`
+    margin: 10px;
+    line-height: 30px;
+    width: 200px;
+`
+
+const Button = styled.input`
+    background: linear-gradient(to bottom, #61bd4f 0, #5aac44 100%);
+    background-color: rgba(0,0,0,0.15);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    font-weight: bold;
+    font-size: .8em;
+    line-height: 1.5em;
+    margin: 0 .25em;
+    padding: .7em 1.3em;
+    vertical-align: top;
+    border-radius: .4em;
+    border: none;
+    cursor: pointer;
+    font-family: jaf-facitweb,Helvetica Neue,Arial,sans-serif;
+`
+
+const RedP = styled.p`
+    color: red;
+`
+
+const TitleP = styled.p`
+    font-weight: 800;
 `
 
 class LoginForm extends Component {
@@ -25,7 +66,8 @@ class LoginForm extends Component {
 
         this.state = {
             username: null,
-            password: null
+            password: null,
+            error: null
         }
 
     }
@@ -40,7 +82,11 @@ class LoginForm extends Component {
                     return true
                 }})) {
             this.props.login(this.state)
-        } 
+        } else {
+            this.setState({
+                error: 'Incorrect Credentials'
+            })
+        }
         // {
         //     console.log(this.state)
         // } else {
@@ -59,9 +105,11 @@ class LoginForm extends Component {
         return (
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
-                    <input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
-                    <input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
-                    <input type='submit' value='Log In' onClick={(e) => this.login(e)}/>
+                    <TitleP>Log In to <em>Not Trello</em>&trade;</TitleP>
+                    <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
+                    <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
+                    <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
+                    {this.state.error && <RedP>{this.state.error}</RedP>}
                 </Form>
             </Div>
         )

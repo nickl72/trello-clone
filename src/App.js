@@ -25,7 +25,8 @@ class App extends Component{
     this.state ={
       users: data.users,
       user: null,
-      tasks: data.tasks
+      tasks: data.tasks,
+      loginClick: false
     }
 
     this.activeElement = null;
@@ -70,7 +71,6 @@ class App extends Component{
     this.setState({
       tasks
     })
-    
   }
 
   handleDragTask = (taskTitle,categoryName) => {
@@ -87,6 +87,16 @@ class App extends Component{
     })
   }
 
+  openLogin = () => {
+    this.setState({
+      loginClick: true
+    })
+  }
+  updateLoginClick = (bool) => {
+    this.setState({
+      loginClick: bool
+    })
+  }
   
 
   render(){
@@ -95,6 +105,7 @@ class App extends Component{
     const completedList = [];
 
     this.state.tasks.map((task, id) => {
+
       switch(task.category) {
         case "To-Do":
           toDoList.push(task);
@@ -106,19 +117,21 @@ class App extends Component{
           completedList.push(task);
           break;
         default:
-          console.error("Task category not recognized.")
-          console.error(task);
+          // console.error("Task category not recognized.")
+          // console.error(task);
       }
       return 0;
     })
 
+
     return (
       <DndProvider backend={HTML5Backend}>
         <div className="App">
-          <Header users={this.state.users} login={this.login}/>
+          <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick}/>
           <Main>
-            <NewTaskForm handleCreateTask={this.handleCreateTask}/>
+            <NewTaskForm handleCreateTask={this.handleCreateTask} user={this.state.user} openLogin={this.openLogin} />
             <List 
+              user={this.state.user}
               category={"To-Do"} 
               tasks={toDoList}
               handleDeleteTask={this.handleDeleteTask} 
@@ -127,6 +140,7 @@ class App extends Component{
               handleDragTask={this.handleDragTask}
             />
             <List 
+              user={this.state.user}
               category={"In Progress"} 
               tasks={inProgressList}
               handleDeleteTask={this.handleDeleteTask} 
@@ -135,6 +149,7 @@ class App extends Component{
               handleDragTask={this.handleDragTask}
             />
             <List 
+              user={this.state.user}
               category={"Completed"} 
               tasks={completedList}  
               handleDeleteTask={this.handleDeleteTask} 
