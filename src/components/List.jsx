@@ -51,7 +51,7 @@ function List(props) {
 
     if(props.tasks) {
         props.tasks.map((task, id) => (
-            listItems.push(<Task task={task} key={id} handleDeleteTask={props.handleDeleteTask} handleMoveTask={props.handleMoveTask} handleSelectList={props.handleSelectList} catSelected={props.catSelected}/>)
+            listItems.push(<Task user={props.user} task={task} key={id} handleDeleteTask={props.handleDeleteTask} handleMoveTask={props.handleMoveTask} handleSelectList={props.handleSelectList} catSelected={props.catSelected}/>)
         ))
     }
 

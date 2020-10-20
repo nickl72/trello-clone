@@ -102,9 +102,9 @@ class App extends Component{
         <Header users={this.state.users} login={this.login}/>
         <Main>
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
-          <List category={"To-Do"} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"In Progress"} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"Completed"} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"To-Do"} user={this.state.user} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"In Progress"} user={this.state.user} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"Completed"} user={this.state.user} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
           
         </Main>
         <Footer />
