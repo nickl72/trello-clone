@@ -29,6 +29,10 @@ const Button = styled.button`
     font-family: jaf-facitweb,Helvetica Neue,Arial,sans-serif;
 `
 
+const Logo = styled.img`
+    height: 25px;
+`
+
 const Header = (props) => {
     const [loginData, setLoginData] = useState({
         loggedIn: false,
@@ -62,7 +66,7 @@ const Header = (props) => {
 
     return (
         <AppHeader>
-            <h1>Not Trello</h1>
+            <Logo src='./NotTrello.png' />
             <Button onClick={handleClick}>{loginData.loggedIn ? 'Log Out' : 'Log In' }</Button>
             {props.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login}/> : null }
         </AppHeader>

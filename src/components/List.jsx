@@ -51,9 +51,8 @@ function List(props) {
     const StyledList = styled.div`
         border-radius: 10px;
         margin: 15px;
-        height: 95%;
-        min-height: 50vh;
         width: 20vw;
+        padding-bottom: 15px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;

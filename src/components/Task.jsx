@@ -131,6 +131,7 @@ function Task(props) {
     
     const [{isDragging},drag] = useDrag({
         item: {type: 'task',title: props.task.title},
+        canDrag: props.user ? true : false,
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
         })
