@@ -28,12 +28,19 @@ class Header extends Component {
         }
     }
 
+    login = (user) => {
+        this.props.login(user)
+        this.setState({
+            loggedIn: true
+        })
+    }
+
     render() {
         return (
             <AppHeader>
                 <h1>Not Trello</h1>
                 <button onClick={this.handleClick}>Log In</button>
-                {this.state.loginClick ? <LoginForm users={this.props.users} handleClick={this.handleClick} /> : null }
+                {this.state.loginClick ? <LoginForm users={this.props.users} handleClick={this.handleClick} login={this.login}/> : null }
             </AppHeader>
         )
     }

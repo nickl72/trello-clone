@@ -33,11 +33,19 @@ class LoginForm extends Component {
     login = (e) => {
         e.preventDefault();
         console.log(this.props.users)
-        if (this.props.users.find(this.state)) {
-            console.log(this.state)
-        } else {
-            console.log(this.state, 'not found')
-        }
+
+        if (this.props.users.find((user,i) => {
+            if (user.username === this.state.username && 
+                user.password === this.state.password) {
+                    return true
+                }})) {
+            this.props.login(this.state)
+        } 
+        // {
+        //     console.log(this.state)
+        // } else {
+        //     console.log(this.state, 'not found')
+        // }
 
     }
 
@@ -51,7 +59,7 @@ class LoginForm extends Component {
         return (
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
-                    <input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username}/>
+                    <input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
                     <input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <input type='submit' value='Log In' onClick={(e) => this.login(e)}/>
                 </Form>
