@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, {css, keyframes} from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
 
 const headShakeAnimation = keyframes`${headShake}`;
@@ -40,59 +40,56 @@ const Submit = styled.input`
 class NewTaskForm extends Component{
     constructor(props){
         super(props);
-
         this.state = {
                 title: null,
                 description: null,
                 dueDate: null,
                 category: "To-Do"
         }
-
-
     }
-
     handleInputChange = (e) => {
         this.setState({
             [e.target.name] : e.target.value
         })
     }
-
     handleCreateAttempt = (e) => {
-        console.log("submit");
         e.preventDefault();
         if(this.state.title === "" || this.state.title === null){
             this.badTitle = true;
             this.forceUpdate();
-            console.log(this.badTitle);
             return false;
         }
-        else if(this.state.dueDate === null){
+        else if(this.state.dueDate === "" ||this.state.dueDate === null){
             this.badDate = true;
             this.forceUpdate();
             return false;
         }
         else{
             this.props.handleCreateTask(e,this.state);
+            let form = document.getElementById("form");
+            form.reset();
+            this.setState({
+                title: null,
+                description: null,
+                dueDate: null,
+                category: "To-Do"
+            })
         }
     }
-
-    badTitle = false;
-    badDate = false;
-
     render(){
         return(
-            <Form onSubmit={(e) => {this.handleCreateAttempt(e)}}>
+            <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
                 <h2>New Task</h2>
                 <label for="title">Task Title:</label>
                 {this.badTitle ? 
                     <Input
-                        required type="text" name="title" placeholder="Title"
+                        type="text" name="title" placeholder="Title"
                         onChange={this.handleInputChange}
                         onAnimationEnd={() => {this.badTitle = false; this.forceUpdate();}}
                     /> 
                 :
                     <input   
-                        required type="text" name="title" placeholder="Title"
+                        type="text" name="title" placeholder="Title"
                         onChange={this.handleInputChange}
                     />
                 }
@@ -103,13 +100,13 @@ class NewTaskForm extends Component{
                 <label for="dueDate">Due Date:</label>
                 {this.badDate ?
                     <Input
-                        required type="date" name="dueDate"
+                        type="date" name="dueDate"
                         onChange={this.handleInputChange}
                         onAnimationEnd={() => {this.badDate=false; this.forceUpdate();}}
                     />
                 :
                     <input 
-                        required type="date" name="dueDate"
+                        type="date" name="dueDate"
                         onChange={this.handleInputChange}
                     />
                 }
