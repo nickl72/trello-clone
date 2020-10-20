@@ -31,7 +31,6 @@ class App extends Component{
 
   handleCreateTask = (e,newTask) => {
     e.preventDefault();
-    console.log(newTask);
     const tasks = this.state.tasks;
     tasks.push(newTask);
     this.setState({tasks})

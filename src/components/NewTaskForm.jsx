@@ -58,23 +58,22 @@ class NewTaskForm extends Component{
     }
 
     handleCreateAttempt = (e) => {
+        console.log("submit");
         e.preventDefault();
         if(this.state.title === "" || this.state.title === null){
             this.badTitle = true;
+            this.forceUpdate();
+            console.log(this.badTitle);
+            return false;
         }
         else if(this.state.dueDate === null){
             this.badDate = true;
+            this.forceUpdate();
+            return false;
         }
         else{
             this.props.handleCreateTask(e,this.state);
-            this.setState({
-                title: null,
-                description: null,
-                dueDate: null,
-                category: "To-Do"
-            })
         }
-        this.forceUpdate();
     }
 
     badTitle = false;
@@ -82,7 +81,7 @@ class NewTaskForm extends Component{
 
     render(){
         return(
-            <Form onSubmit={(e) => {this.props.handleCreateTask(e,this.state)}}>
+            <Form onSubmit={(e) => {this.handleCreateAttempt(e)}}>
                 <h2>New Task</h2>
                 <label for="title">Task Title:</label>
                 {this.badTitle ? 
@@ -120,7 +119,7 @@ class NewTaskForm extends Component{
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select><br/>   
-                <Submit type="submit" value="Create Task" onClick={(e) =>{this.handleCreateAttempt(e)}}></Submit>
+                <Submit type="submit" value="Create Task"></Submit>
             </Form>
         )
     }
