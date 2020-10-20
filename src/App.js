@@ -73,13 +73,13 @@ class App extends Component{
   
 
   render(){
-    console.log(this.state.tasks)
+    // console.log(this.state.tasks)
     const toDoList = [];
     const inProgressList = [];
     const completedList = [];
 
     this.state.tasks.map((task, id) => {
-      console.log(task)
+      // console.log(task)
       switch(task.category) {
         case "To-Do":
           toDoList.push(task);
@@ -91,14 +91,14 @@ class App extends Component{
           completedList.push(task);
           break;
         default:
-          console.error("Task category not recognized.")
-          console.error(task);
+          // console.error("Task category not recognized.")
+          // console.error(task);
       }
       return 0;
     })
 
-    console.log('todolist:')
-    console.log(toDoList)
+    // console.log('todolist:')
+    // console.log(toDoList)
     return (
       <div className="App">
         <Header users={this.state.users} login={this.login}/>
