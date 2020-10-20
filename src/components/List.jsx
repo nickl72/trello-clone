@@ -1,10 +1,52 @@
-import React from 'react';
-import Draggable from 'react-draggable';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 import Task from './Task'
 
-function List(props) {
 
+function List(props) {
+    const [listData, setlistData] = useState({
+        category: props.category,
+        tasks: props
+    })
+
+    const ListTitle = styled.h2`
+        text-align: center;
+    `
+
+    let categoryStyles = '';
+    switch(listData.category) {
+        case "To-Do":
+            categoryStyles = 'background: coral;'
+            
+            break;
+        case "In Progress":
+            categoryStyles = 'background: lightgreen;'
+
+            break;
+        case "Completed":
+            categoryStyles = 'background: gold;'
+
+            break;
+        default:
+            console.error("Task category not recognized.")
+      }
+    
+    
+    
+    const StyledList = styled.div`
+        border: 5px solid rgba(0,0,0,0.3);
+        border-radius: 15px;
+        margin: 5px;
+        height: auto;
+        width: 20vw;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        padding: 20px;
+        ${categoryStyles}
+    `
+    
     const listItems = [];
 
     if(props.tasks) {
@@ -15,8 +57,10 @@ function List(props) {
 
     return(
         <div id={props.category} /*onMouseEnter={() => {props.onMouseEnter(props.category)}}*/>
-            <h2>{props.category}</h2>
-            {listItems}
+            <ListTitle>{props.category}</ListTitle>
+            <StyledList>
+                {listItems}
+            </StyledList>
         </div>
     )
 }
