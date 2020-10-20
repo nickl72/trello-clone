@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
-import LoginForm from './LoginForm'
 
 const headShakeAnimation = keyframes`${headShake}`;
 
@@ -13,6 +12,7 @@ const Form = styled.form`
     border: solid #298FCA;
     border-radius: 10px;
     background-color: #E4F0F6;
+    height: 100%;
 `
 
 
