@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Draggable from 'react-draggable';
 
@@ -103,7 +103,8 @@ const MoveButton = styled(Button)`
 
 function Task(props) {
     const [taskData, setTaskData] = useState({
-        category: props.task.category
+        category: props.task.category,
+        newCategory: ""
     })
     
     const whenDue = (dueDate) => {
@@ -125,7 +126,25 @@ function Task(props) {
             return <p className="late">Past Due</p>
         }
     }
-  
+    const defaultCategory = (category) => {
+        let displayCategory;
+        switch(category) {
+            case "To-Do":
+                return displayCategory="In Progress";
+            case "In Progress":
+                return displayCategory="Completed";
+            case "Completed":
+                return displayCategory="In Progress";
+        }
+        return displayCategory;
+    }
+
+    useEffect(() => {
+        setTaskData({
+            newCategory: defaultCategory(taskData.category),
+            category: props.task.category
+        })
+    },[])
         
     return(
         <Draggable onDrag = {((e,data) => {
@@ -149,8 +168,8 @@ function Task(props) {
                             Delete Task
                         </Button>
                     {/* <button onClick = {(e, task) => props.handleDeleteTask(e, props.task)}>Delete Task</button> */}
-                    <form onChange={(e)=> {setTaskData({category:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.category)} >
-                        <select name="category" defaultValue = {taskData.category}>
+                    <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
+                        <select name="category" defaultValue = {defaultCategory(taskData.category)}>
                             <option value="To-Do">To-Do</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Completed">Completed</option>
