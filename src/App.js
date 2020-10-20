@@ -9,6 +9,9 @@ import Footer from './components/Footer';
 
 import data from './data';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 const Main = styled.main`
   display: flex;
   width: 100%;
@@ -70,6 +73,20 @@ class App extends Component{
     
   }
 
+  handleDragTask = (taskTitle,categoryName) => {
+    console.log('Task: '+taskTitle);
+    console.log('Category: '+categoryName);
+    let allTasks = this.state.tasks;
+    const foundTask = allTasks.filter(task => task.title === taskTitle)[0];
+    const index = allTasks.indexOf(foundTask);
+
+    allTasks[index].category = categoryName;
+
+    this.setState({
+      tasks: allTasks
+    })
+  }
+
   
 
   render(){
@@ -96,17 +113,40 @@ class App extends Component{
     })
 
     return (
-      <div className="App">
-        <Header users={this.state.users} login={this.login}/>
-        <Main>
-          <NewTaskForm handleCreateTask={this.handleCreateTask}/>
-          <List category={"To-Do"} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"In Progress"} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"Completed"} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          
-        </Main>
-        <Footer />
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className="App">
+          <Header users={this.state.users} login={this.login}/>
+          <Main>
+            <NewTaskForm handleCreateTask={this.handleCreateTask}/>
+            <List 
+              category={"To-Do"} 
+              tasks={toDoList}
+              handleDeleteTask={this.handleDeleteTask} 
+              handleMoveTask={this.handleMoveTask} 
+              handleSelectList={this.handleSelectList}
+              handleDragTask={this.handleDragTask}
+            />
+            <List 
+              category={"In Progress"} 
+              tasks={inProgressList}
+              handleDeleteTask={this.handleDeleteTask} 
+              handleMoveTask={this.handleMoveTask} 
+              handleSelectList={this.handleSelectList}
+              handleDragTask={this.handleDragTask}
+            />
+            <List 
+              category={"Completed"} 
+              tasks={completedList}  
+              handleDeleteTask={this.handleDeleteTask} 
+              handleMoveTask={this.handleMoveTask} 
+              handleSelectList={this.handleSelectList}
+              handleDragTask={this.handleDragTask}
+            />
+            
+          </Main>
+          <Footer />
+        </div>
+      </DndProvider>
     );
   }
 }
