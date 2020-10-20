@@ -18,11 +18,18 @@ function List(props) {
     let categoryStyles = '';
     switch(listData.category) {
         case "To-Do":
-            categoryStyles = 'background: coral;'
+            categoryStyles = `
+                background: coral;
+            
+            `
             
             break;
         case "In Progress":
-            categoryStyles = 'background: lightgreen;'
+            categoryStyles = `
+                background: #51E898;
+                border: solid #4CAF54;
+
+            `
 
             break;
         case "Completed":
@@ -36,11 +43,10 @@ function List(props) {
     
     
     const StyledList = styled.div`
-        border: solid rgba(0,0,0,0.3);
         border-radius: 10px;
         margin: 15px;
         height: 100%;
-        min-height: 70vh;
+        min-height: 86vh;
         width: 20vw;
         display: flex;
         flex-flow: column nowrap;
