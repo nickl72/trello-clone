@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
+import LoginForm from './LoginForm'
 
 const headShakeAnimation = keyframes`${headShake}`;
 
@@ -56,33 +57,39 @@ class NewTaskForm extends Component{
     }
     handleCreateAttempt = (e) => {
         e.preventDefault();
-        if ((this.state.title === "" || this.state.title === null) && (this.state.dueDate === "" ||this.state.dueDate === null)){
-            this.badTitle=true;
-            this.badDate=true;
-            this.forceUpdate();
-            return false;
-        }
-        else if(this.state.title === "" || this.state.title === null){
-            this.badTitle = true;
-            this.forceUpdate();
-            return false;
-        }
-        else if(this.state.dueDate === "" ||this.state.dueDate === null){
-            this.badDate = true;
-            this.forceUpdate();
-            return false;
+        if(this.props.user) {
+            if ((this.state.title === "" || this.state.title === null) && (this.state.dueDate === "" ||this.state.dueDate === null)){
+                this.badTitle=true;
+                this.badDate=true;
+                this.forceUpdate();
+                return false;
+            }
+            else if(this.state.title === "" || this.state.title === null){
+                this.badTitle = true;
+                this.forceUpdate();
+                return false;
+            }
+            else if(this.state.dueDate === "" ||this.state.dueDate === null){
+                this.badDate = true;
+                this.forceUpdate();
+                return false;
+            }
+            else{
+                this.props.handleCreateTask(e,this.state);
+                let form = document.getElementById("form");
+                form.reset();
+                this.setState({
+                    title: null,
+                    description: null,
+                    dueDate: null,
+                    category: "To-Do"
+                })
+            }
         }
         else{
-            this.props.handleCreateTask(e,this.state);
-            let form = document.getElementById("form");
-            form.reset();
-            this.setState({
-                title: null,
-                description: null,
-                dueDate: null,
-                category: "To-Do"
-            })
+            this.props.openLogin();
         }
+
     }
     badTitle = null;
     badDate = null;
@@ -113,7 +120,7 @@ class NewTaskForm extends Component{
                     <option value="To-Do">To-Do</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
-                </select><br/>   
+                </select><br/> 
                 <Submit type="submit" value="Create Task"></Submit>
             </Form>
         )

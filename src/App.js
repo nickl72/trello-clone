@@ -22,7 +22,8 @@ class App extends Component{
     this.state ={
       users: data.users,
       user: null,
-      tasks: data.tasks
+      tasks: data.tasks,
+      loginClick: false
     }
 
     this.activeElement = null;
@@ -67,9 +68,18 @@ class App extends Component{
     this.setState({
       tasks
     })
-    
   }
 
+  openLogin = () => {
+    this.setState({
+      loginClick: true
+    })
+  }
+  updateLoginClick = (bool) => {
+    this.setState({
+      loginClick: bool
+    })
+  }
   
 
   render(){
@@ -99,12 +109,12 @@ class App extends Component{
 
     return (
       <div className="App">
-        <Header users={this.state.users} login={this.login}/>
+        <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick}/>
         <Main>
-          <NewTaskForm handleCreateTask={this.handleCreateTask}/>
-          <List category={"To-Do"} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"In Progress"} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
-          <List category={"Completed"} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <NewTaskForm handleCreateTask={this.handleCreateTask} user={this.state.user} openLogin={this.openLogin} />
+          <List category={"To-Do"} user={this.state.user} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"In Progress"} user={this.state.user} tasks={inProgressList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
+          <List category={"Completed"} user={this.state.user} tasks={completedList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
           
         </Main>
         <Footer />
