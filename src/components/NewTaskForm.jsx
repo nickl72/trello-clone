@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
 
 const headShakeAnimation = keyframes`${headShake}`;
@@ -13,10 +13,6 @@ const Form = styled.form`
     border-radius: 10px;
     background-color: #E4F0F6;
 
-`
-
-const Input = styled.input`
-    animation: ${headShakeAnimation} 2s 1;
 `
 
 
@@ -36,6 +32,12 @@ const Submit = styled.input`
         background-color: #5BA4CF;
     }
 `
+const Title = styled.input`
+animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"}
+`
+const Date = styled.input`
+animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"}
+`
 
 class NewTaskForm extends Component{
     constructor(props){
@@ -54,7 +56,13 @@ class NewTaskForm extends Component{
     }
     handleCreateAttempt = (e) => {
         e.preventDefault();
-        if(this.state.title === "" || this.state.title === null){
+        if ((this.state.title === "" || this.state.title === null) && (this.state.dueDate === "" ||this.state.dueDate === null)){
+            this.badTitle=true;
+            this.badDate=true;
+            this.forceUpdate();
+            return false;
+        }
+        else if(this.state.title === "" || this.state.title === null){
             this.badTitle = true;
             this.forceUpdate();
             return false;
@@ -76,40 +84,30 @@ class NewTaskForm extends Component{
             })
         }
     }
+    badTitle = null;
+    badDate = null;
     render(){
         return(
             <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
                 <h2>New Task</h2>
-                <label for="title">Task Title:</label>
-                {this.badTitle ? 
-                    <Input
-                        type="text" name="title" placeholder="Title"
-                        onChange={this.handleInputChange}
-                        onAnimationEnd={() => {this.badTitle = false; this.forceUpdate();}}
-                    /> 
-                :
-                    <input   
-                        type="text" name="title" placeholder="Title"
-                        onChange={this.handleInputChange}
-                    />
-                }
+            <label for="title">Task Title:</label> 
+                <Title
+                    type="text" name="title" placeholder="Title"
+                    badTitle={this.badTitle}
+                    onChange={this.handleInputChange}
+                    onAnimationEnd={() => {this.badTitle=false; this.forceUpdate();}}
+                /> 
                 <br />
                 <label for="description">Task Description:</label>
                 <textarea rows= "5" cols="20" name="description" placeholder="Type description here..."
                     onChange={this.handleInputChange}></textarea><br />
                 <label for="dueDate">Due Date:</label>
-                {this.badDate ?
-                    <Input
-                        type="date" name="dueDate"
-                        onChange={this.handleInputChange}
-                        onAnimationEnd={() => {this.badDate=false; this.forceUpdate();}}
-                    />
-                :
-                    <input 
-                        type="date" name="dueDate"
-                        onChange={this.handleInputChange}
-                    />
-                }
+                <Date
+                    type="date" name="dueDate"
+                    badDate={this.badDate}
+                    onChange={this.handleInputChange}
+                    onAnimationEnd={() => {this.badDate=false; this.forceUpdate();}}
+                />
                 <br />
                 <select name="category" onChange={this.handleInputChange}>
                     <option value="To-Do">To-Do</option>
