@@ -29,6 +29,10 @@ class App extends Component{
     
   }
 
+  login = (user) => {
+    this.setState({user})
+  }
+
   handleCreateTask = (e,newTask) => {
     e.preventDefault();
     const tasks = this.state.tasks;
@@ -97,7 +101,7 @@ class App extends Component{
     console.log(toDoList)
     return (
       <div className="App">
-        <Header />
+        <Header users={this.state.users} login={this.login}/>
         <Main>
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
           <List category={"To-Do"} tasks={toDoList} /*onMouseEnter={this.onMouseEnter}*/ handleDeleteTask={this.handleDeleteTask} handleMoveTask={this.handleMoveTask} handleSelectList={this.handleSelectList}/>
