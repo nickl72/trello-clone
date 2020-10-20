@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Draggable from 'react-draggable';
 
@@ -24,15 +24,12 @@ const Card = styled.div`
 `
 
 
-class Task extends Component{
-    constructor(props) {
-        super(props)
-
-        this.state = {
-          category: this.props.task.category
-        }
-    }
-    whenDue = (dueDate) => {
+function Task(props) {
+    const [taskData, setTaskData] = useState({
+        category: props.task.category
+    })
+    
+    const whenDue = (dueDate) => {
         let today = new Date();
         let [month, day, year] = [today.getMonth() + 1, today.getDate(), today.getFullYear()];
         
@@ -52,43 +49,36 @@ class Task extends Component{
         }
     }
   
-    handleSelectList = (e) => {
-        this.setState({
-          [e.target.name] : e.target.value
-      })
-    }
-
-    render() {
         
-        return(
-            <Draggable onDrag = {((e,data) => {
-                // console.log(e);
-                // console.log(data);
-            })}>
-                <Card>
-                    <h1>{this.props.task.title}</h1>
-                    <p>{this.props.task.description}</p>
-                    <div className="dueDate">
-                        <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
-                        <p>{this.props.task.dueDate}</p>
-                        
-                        {this.whenDue(this.props.task.dueDate)}
-                    </div>
-                    <div>
-                        <button onClick = {(e, task) => this.props.handleDeleteTask(e, this.props.task)}>Delete Task</button>
-                        <form onChange={this.handleSelectList} onSubmit={(e, task) => this.props.handleMoveTask(e, this.props.task, this.state.category)} >
-                            <select name="category" defaultValue = {this.state.category}>
-                                <option value="To-Do">To-Do</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                            <input type = "submit" value="Move Task"/>
-                        </form>
-                    </div>
-                </Card>
-            </Draggable>
-        )
-    }
+    return(
+        <Draggable onDrag = {((e,data) => {
+            // console.log(e);
+            // console.log(data);
+        })}>
+            <Card>
+                <h1>{props.task.title}</h1>
+                <p>{props.task.description}</p>
+                <div className="dueDate">
+                    <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
+                    <p>{props.task.dueDate}</p>
+                    
+                    {whenDue(props.task.dueDate)}
+                </div>
+                <div>
+                    <button onClick = {(e, task) => props.handleDeleteTask(e, props.task)}>Delete Task</button>
+                    <form onChange={(e)=> {setTaskData({category:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.category)} >
+                        <select name="category" defaultValue = {taskData.category}>
+                            <option value="To-Do">To-Do</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                        <input type = "submit" value="Move Task"/>
+                    </form>
+                </div>
+            </Card>
+        </Draggable>
+    )
+    
 }
 
 export default Task;
