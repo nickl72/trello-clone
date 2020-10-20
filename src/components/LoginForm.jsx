@@ -58,6 +58,12 @@ const RedP = styled.p`
 
 const TitleP = styled.p`
     font-weight: 800;
+    font-size: 1.2em;
+`
+
+const Logo = styled.img`
+    height: 22px;
+    vertical-align: bottom;
 `
 
 class LoginForm extends Component {
@@ -87,11 +93,6 @@ class LoginForm extends Component {
                 error: 'Incorrect Credentials'
             })
         }
-        // {
-        //     console.log(this.state)
-        // } else {
-        //     console.log(this.state, 'not found')
-        // }
 
     }
 
@@ -105,7 +106,7 @@ class LoginForm extends Component {
         return (
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
-                    <TitleP>Log In to <em>Not Trello</em>&trade;</TitleP>
+                    <TitleP>Log In to <Logo src='./NotTrello_Whitebg.png' alt='Not Trello Logo'/>&trade;</TitleP>
                     <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
