@@ -35,7 +35,7 @@ function List(props) {
     
     
     const StyledList = styled.div`
-        border: solid black 3px;
+        border: 5px solid rgba(0,0,0,0.3);
         border-radius: 15px;
         margin: 20px auto;
         height: auto;
