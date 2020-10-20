@@ -39,7 +39,7 @@ function List(props) {
         border-radius: 15px;
         margin: 5px;
         height: auto;
-        width: 250px;
+        width: 20vw;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
