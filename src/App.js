@@ -78,6 +78,7 @@ class App extends Component{
     const completedList = [];
 
     this.state.tasks.map((task, id) => {
+
       switch(task.category) {
         case "To-Do":
           toDoList.push(task);
@@ -89,11 +90,12 @@ class App extends Component{
           completedList.push(task);
           break;
         default:
-          console.error("Task category not recognized.")
-          console.error(task);
+          // console.error("Task category not recognized.")
+          // console.error(task);
       }
       return 0;
     })
+
 
     return (
       <div className="App">
