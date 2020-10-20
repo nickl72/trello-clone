@@ -32,6 +32,13 @@ class LoginForm extends Component {
 
     login = (e) => {
         e.preventDefault();
+        console.log(this.props.users)
+        if (this.props.users.find(this.state)) {
+            console.log(this.state)
+        } else {
+            console.log(this.state, 'not found')
+        }
+
     }
 
     handleChange = (e) => {
@@ -42,7 +49,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <Div>
+            <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
                     <input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username}/>
                     <input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>

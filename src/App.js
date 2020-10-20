@@ -63,7 +63,7 @@ class App extends Component{
     console.log(toDoList)
     return (
       <div className="App">
-        <Header />
+        <Header users={this.state.users}/>
         <Main>
           <NewTaskForm handleCreateTask={this.handleCreateTask}/>
           <List category={"To-Do"} tasks={toDoList}/>

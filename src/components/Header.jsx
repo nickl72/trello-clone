@@ -20,11 +20,12 @@ class Header extends Component {
         }
     }
 
-    handleClick = () => {
-        this.setState({
-            loginClick:!this.state.loginClick
-            
-        })
+    handleClick = (e) => {
+        if (e.currentTarget === e.target ) {
+            this.setState({
+                loginClick:!this.state.loginClick
+            })
+        }
     }
 
     render() {
@@ -32,7 +33,7 @@ class Header extends Component {
             <AppHeader>
                 <h1>Not Trello</h1>
                 <button onClick={this.handleClick}>Log In</button>
-                {this.state.loginClick ? <LoginForm /> : null }
+                {this.state.loginClick ? <LoginForm users={this.props.users} handleClick={this.handleClick} /> : null }
             </AppHeader>
         )
     }
