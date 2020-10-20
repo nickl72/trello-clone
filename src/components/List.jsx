@@ -22,21 +22,24 @@ function List(props) {
     switch(listData.category) {
         case "To-Do":
             categoryStyles = `
-                background: coral;
-            
+                background: #EFB3AB;
+                border: solid #EB5A46;
+
             `
             
             break;
         case "In Progress":
             categoryStyles = `
-                background: #51E898;
-                border: solid #4CAF54;
-
+                background: #F5EA92;
+                border: solid #F2D600;
             `
 
             break;
         case "Completed":
-            categoryStyles = 'background: gold;'
+            categoryStyles = `
+                background: #90ECC1;
+                border: solid #4CAF54;
+            `
 
             break;
         default:
@@ -48,7 +51,7 @@ function List(props) {
     const StyledList = styled.div`
         border-radius: 10px;
         margin: 15px;
-        height: 100%;
+        height: 95%;
         min-height: 50vh;
         width: 20vw;
         display: flex;
