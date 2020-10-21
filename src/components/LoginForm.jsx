@@ -107,7 +107,7 @@ class LoginForm extends Component {
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
                     <TitleP>Log In to <Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
-                    <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
+                    <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off' autoFocus/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
                     {this.state.error && <RedP>{this.state.error}</RedP>}
