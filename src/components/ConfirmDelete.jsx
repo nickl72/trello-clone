@@ -102,10 +102,6 @@ const Icon = styled.div`
 
 function ConfirmDelete(props) {
 
-    const [ConfirmDelete, setConfirmDelete] = useState({
-
-    })
-
     return(
         <Div>
             <Modal>
