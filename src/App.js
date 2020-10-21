@@ -134,7 +134,8 @@ class App extends Component{
 
     if(this.state.user) {
       this.state.tasks.map((task, id) => {
-        if(task.user === this.state.user.username){
+        if(task.user === this.state.user.username ||
+          this.state.user.admin){
           switch(task.category) {
             case "To-Do":
               toDoList.push(task);
@@ -178,9 +179,20 @@ class App extends Component{
     return (
       <DndProvider backend={HTML5Backend}>
         <div className={this.state.notTrello ? "App invert" : "App"}>
-          <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick} notTrello={() => this.setState({notTrello: !this.state.notTrello})}/>
+          <Header 
+            users={this.state.users}
+            user={this.state.user}
+            login={this.login} 
+            loginClick={this.state.loginClick} 
+            updateLoginClick={this.updateLoginClick} 
+            notTrello={() => this.setState({notTrello: !this.state.notTrello})}
+          />
           <Main>
-            <NewTaskForm handleCreateTask={this.handleCreateTask} user={this.state.user} openLogin={this.openLogin} />
+            <NewTaskForm 
+              handleCreateTask={this.handleCreateTask} 
+              user={this.state.user} 
+              openLogin={this.openLogin}
+            />
             <List 
               user={this.state.user}
               category={"To-Do"} 
