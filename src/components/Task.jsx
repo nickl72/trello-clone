@@ -78,10 +78,16 @@ const Card = styled.div`
 
     .editActions {
         display: flex;
-        flex-wrap: wrap;
-        width: 100%;
+        flex-flow: row wrap;
+        align-items: center;
         justify-content: space-around;
-        margin: 8px 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    .taskCategory {
+        width: 100%;
+        margin-top: 5px;
     }
         
 `
@@ -89,12 +95,12 @@ const Card = styled.div`
 const Button = styled.button`
     display:flex;
     align-items: center;
+    margin: 15px 0;
     border: none;
     border-radius: 4px;
     padding: 5px;
     color: white;
     font-weight: bold;
-    margin-bottom: 15px;
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #ce3323;
     &:hover {
@@ -108,7 +114,8 @@ const MoveButton = styled(Button)`
     &:hover {
         background-color: #fdc788;
     }
-    margin:0;
+    margin-top: 5px;
+    width: 100%;
 `
 
 
@@ -232,7 +239,7 @@ function Task(props) {
                 </Button>
                 {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={cancelClick} localHandleDelete={localHandleDelete}/> : null}
                 <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
-                    <select name="category" defaultValue = {defaultCategory(taskData.category)}>
+                    <select className='taskCategory' name="category" defaultValue = {defaultCategory(taskData.category)}>
                         <option value="To-Do">To-Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
