@@ -20,6 +20,7 @@ const Div = styled.div`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: #fff;
     padding: 20px 30px;
     border-radius: 10px;
@@ -30,12 +31,13 @@ const Form = styled.form`
 `
 
 const Input = styled.input`
-    margin: 10px;
+    margin: 15px;
     line-height: 30px;
-    width: 200px;
+    width: 275px;
 `
 
 const Button = styled.input`
+    width: 275px;
     background: linear-gradient(to bottom, #61bd4f 0, #5aac44 100%);
     background-color: rgba(0,0,0,0.15);
     box-shadow: 0 2px 0 rgba(0,0,0,0.3);
@@ -43,7 +45,7 @@ const Button = styled.input`
     font-weight: bold;
     font-size: .8em;
     line-height: 1.5em;
-    margin: 0 .25em;
+    margin: 15px;
     padding: .7em 1.3em;
     vertical-align: top;
     border-radius: .4em;
@@ -66,6 +68,11 @@ const Logo = styled.img`
     vertical-align: bottom;
 `
 
+const SignUp = styled.a` 
+    margin: 15px;
+`
+    
+
 class LoginForm extends Component {
     constructor(props) {
         super(props)
@@ -73,25 +80,44 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
+            admin: false,
+            signUp: false,
             error: null
         }
 
     }
 
-    login = (e) => {
+    login = (e, signUp = false) => {
         e.preventDefault();
         console.log(this.props.users)
+        let error;
 
-        if (this.props.users.find((user,i) => {
+        const foundUser = this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
-                user.password === this.state.password) {
+                (user.password === this.state.password || this.state.signUp)) {
                     return true
-                }})) {
-            this.props.login(this.state)
-        } else {
-            this.setState({
-                error: 'Incorrect Credentials'
+                }
             })
+
+        if (foundUser && !this.state.signUp) {
+            this.props.login(foundUser) // Logs in created user
+        } else if (foundUser) {
+            error = 'Username is unavailable'
+            this.setState({error})
+        } else {
+            if (this.state.signUp) {
+                if (this.state.username && this.state.password) {
+                    this.props.login({
+                        password: this.state.password, 
+                        username: this.state.username, 
+                        admin: false}, true) // Logs in new user
+                } else {
+                    error = 'Username and Password cannot be blank';
+                }
+            } else {
+                error = 'Incorrect credentials'
+            }
+            this.setState({error})
         }
 
     }
@@ -106,10 +132,11 @@ class LoginForm extends Component {
         return (
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
-                    <TitleP>Log In to <Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
+                    <TitleP>{ this.state.signUp ? 'Sign up For ' : 'Log In to '}<Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
                     <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off' autoFocus/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
-                    <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
+                    <Button type='submit' value={this.state.signUp ? 'Sign Up':'Log In'} onClick={(e) => this.login(e)}/>
+                    {!this.state.signUp && <SignUp href='#' onClick={()=>this.setState({signUp: true, error: null})}>Don't have an account? Sign Up here!</SignUp>}
                     {this.state.error && <RedP>{this.state.error}</RedP>}
                 </Form>
             </Div>
