@@ -216,7 +216,7 @@ function Task(props) {
     }
 
     return(
-        <Card ref={drag} isDragging={isDragging}>
+        <Card ref={drag} isDragging={isDragging} onDoubleClick={() => {openCard(props.task)}}>
 
             <div className='title-box'>
                 <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>
