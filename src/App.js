@@ -33,8 +33,18 @@ class App extends Component{
     
   }
 
-  login = (user) => {
-    this.setState({user})
+  login = (user, newUser) => {
+    if (newUser) {
+      const users = this.state.users;
+      users.push(user)
+      this.setState({
+        users,
+        user        
+      })
+
+    } else {
+      this.setState({user})
+    }
   }
 
   handleCreateTask = (e,newTask) => {
@@ -106,7 +116,7 @@ class App extends Component{
 
     if(this.state.user) {
       console.log(this.state.user)
-      this.state.user.tasks.map((task, id) => {
+      this.state.user.tasks && this.state.user.tasks.map((task, id) => {
   
         switch(task.category) {
           case "To-Do":
