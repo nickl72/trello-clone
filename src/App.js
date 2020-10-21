@@ -76,7 +76,7 @@ class App extends Component{
   handleDragTask = (taskTitle,categoryName) => {
     console.log('Task: '+taskTitle);
     console.log('Category: '+categoryName);
-    let allTasks = this.state.tasks;
+    let allTasks = this.state.user.tasks;
     const foundTask = allTasks.filter(task => task.title === taskTitle)[0];
     const index = allTasks.indexOf(foundTask);
 
