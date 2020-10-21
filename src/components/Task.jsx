@@ -144,6 +144,8 @@ function Task(props) {
                 return displayCategory="Completed";
             case "Completed":
                 return displayCategory="In Progress";
+            default:
+                console.error("Invalid Category")
         }
         return displayCategory;
     }
@@ -153,7 +155,8 @@ function Task(props) {
             newCategory: defaultCategory(taskData.category),
             category: props.task.category
         })
-    },[])
+    },[])// eslint-disable-line react-hooks/exhaustive-deps
+    // Above eslint... disables the warning from the empty array, stopping the infinite loop.
 
     const deleteTaskClick = () => {
         setTaskData({

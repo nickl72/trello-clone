@@ -78,8 +78,8 @@ class LoginForm extends Component {
         super(props)
 
         this.state = {
-            username: null,
-            password: null,
+            username: "",
+            password: "",
             admin: false,
             signUp: false,
             error: null
@@ -96,7 +96,8 @@ class LoginForm extends Component {
             if (user.username === this.state.username && 
                 (user.password === this.state.password || this.state.signUp)) {
                     return true
-                }
+                } 
+                return false
             })
 
         if (foundUser && !this.state.signUp) {

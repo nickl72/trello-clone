@@ -112,7 +112,7 @@ class NewTaskForm extends Component{
         return(
             <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
                 <FormHeader>New Task</FormHeader>
-                <label for="title">Task Title:</label> 
+                <label htmlFor="title">Task Title:</label> 
                 <Title
                     type="text" name="title" placeholder="Title"
                     badTitle={this.badTitle}
@@ -120,12 +120,12 @@ class NewTaskForm extends Component{
                     onAnimationEnd={() => {this.badTitle=false; this.forceUpdate();}}
                 /> 
                 <br />
-                <label for="description">Task Description:</label>
+                <label htmlFor="description">Task Description:</label>
                 <textarea rows= "5" cols="20" name="description" placeholder="Type description here..."
                     onChange={this.handleInputChange}>
                 </textarea>
                 <br />
-                <label for="dueDate">Due Date:</label>
+                <label htmlFor="dueDate">Due Date:</label>
                 <Date
                     type="date" name="dueDate"
                     badDate={this.badDate}
@@ -138,7 +138,7 @@ class NewTaskForm extends Component{
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <label for="private">Make Task Private:</label>
+                <label htmlFor="private">Make Task Private:</label>
                 <input type='checkbox' name='private'
                     onChange={(e) => {
                         this.setState({private: !this.state.private})
