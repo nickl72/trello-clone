@@ -19,7 +19,7 @@ const data = {
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
             category: "To-Do",
-            private: false
+            private: true
         },
         {
             taskId: 2,
@@ -37,7 +37,7 @@ const data = {
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
             category: "In Progress",
-            private: false
+            private: true
         },
         {
             taskId: 4,
@@ -45,7 +45,7 @@ const data = {
             title: 'Admin Task #4',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "Completed",
+            category: "In Progress",
             private: false
         },
         {
@@ -55,7 +55,7 @@ const data = {
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
             category: "Completed",
-            private: false
+            private: true
         },
         {
             taskId: 6,
@@ -63,7 +63,7 @@ const data = {
             title: 'Dummy Task #1',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "To-Do",
+            category: "In Progress",
             private: false
         },
         {
@@ -91,7 +91,7 @@ const data = {
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
             category: "Completed",
-            private: false
+            private: true
         },
         {
             taskId: 10,
@@ -100,7 +100,7 @@ const data = {
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
             category: "Completed",
-            private: false
+            private: true
         }
     ]
 }

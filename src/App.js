@@ -109,7 +109,7 @@ class App extends Component{
 
     if(this.state.user) {
       this.state.tasks.map((task, id) => {
-        if(task.user == this.state.user.username){
+        if(task.user === this.state.user.username){
           switch(task.category) {
             case "To-Do":
               toDoList.push(task);
@@ -121,14 +121,32 @@ class App extends Component{
               completedList.push(task);
               break;
             default:
-              // console.error("Task category not recognized.")
-              // console.error(task);
+              console.error("Task category not recognized.")
+              console.error(task);
           }
         }
         return 0;
       })
     } else {
-
+      this.state.tasks.map((task, id) => {
+        if(task.private === false){
+          switch(task.category) {
+            case "To-Do":
+              toDoList.push(task);
+              break;
+            case "In Progress":
+              inProgressList.push(task);
+              break;
+            case "Completed":
+              completedList.push(task);
+              break;
+            default:
+              console.error("Task category not recognized.")
+              console.error(task);
+          }
+        }
+        return 0;
+      })
     }
 
 
