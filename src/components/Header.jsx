@@ -39,8 +39,8 @@ const Header = (props) => {
         // loginClick: false       
     })
 
-    const login = (user) => {
-        props.login(user)
+    const login = (user, newUser = false) => {
+        props.login(user, newUser)
         setLoginData({
             loggedIn: !loginData.loggedIn,
         })
