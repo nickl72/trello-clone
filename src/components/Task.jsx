@@ -33,16 +33,11 @@ const Card = styled.div`
 
     }
 
-    h3 {
+    h3, h4 {
         margin: 0;
-        padding 5px;
+        padding 10px;
     }
     
-    h4 {
-        margin: 0;
-        padding 5px;
-    }
-
     img{
         height: 15px;
     }
