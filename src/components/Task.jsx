@@ -18,16 +18,29 @@ const Card = styled.div`
     position: relative;
 
 
-    h3 {
+    .title-box {
         width: 100%;
         margin: 0;
-        padding: 7px 0 12px 0;
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
         border-bottom: solid gray 1px;
-        border-top: solid 12px lightgray;
         background-color: lightgray;
         border-radius: 5px 5px 0 0; 
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: flex-end;
+
+    }
+
+    h3 {
+        margin: 0;
+        padding 5px;
+    }
+    
+    h4 {
+        margin: 0;
+        padding 5px;
     }
 
     img{
@@ -173,7 +186,10 @@ function Task(props) {
         
     return(
         <Card ref={drag} isDragging={isDragging}>
-            <h3>{props.task.title}</h3>
+            <div className='title-box'>
+                <h3>{props.task.title}</h3>
+                <h4>{props.task.user}</h4>
+            </div>
             <p className="description">{props.task.description}</p>
             <div className="dueDate">
                 <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
