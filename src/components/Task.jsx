@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 
 const Card = styled.div`
     display: flex;
@@ -128,9 +128,44 @@ function Task(props) {
             return <p className="late">Past Due</p>
         }
     }
+
+    const ref = useRef(null);
+
+    const [,drop] = useDrop({
+        accept: 'task',
+        hover(item,monitor) {
+            if(!ref.current) {
+                return;
+            }
+
+            const dragIndex = item.index;
+            const hoverIndex = props.index;
+
+            if(dragIndex === hoverIndex) {
+                return;
+            }
+            
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const clientOffset = monitor.getClientOffset();
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+
+            props.moveTask(dragIndex,hoverIndex);
+
+            item.index = hoverIndex;
+        }
+    })
     
     const [{isDragging},drag] = useDrag({
-        item: {type: 'task',title: props.task.title},
+        item: {type: 'task',title: props.task.title,index:props.index},
         canDrag: props.user ? true : false,
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
@@ -156,9 +191,11 @@ function Task(props) {
             category: props.task.category
         })
     },[])
+
+    drag(drop(ref))
         
     return(
-        <Card ref={drag} isDragging={isDragging}>
+        <Card ref={ref} isDragging={isDragging}>
             <h3>{props.task.title}</h3>
             <p className="description">{props.task.description}</p>
             <div className="dueDate">

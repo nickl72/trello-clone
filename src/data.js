@@ -10,25 +10,25 @@ const data = {
             title: 'Task #2',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "In Progress"
+            category: "To-Do"
         },
         {
             title: 'Task #3',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "In Progress"
+            category: "To-Do"
         },
         {
             title: 'Task #4',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "Completed"
+            category: "To-Do"
         },
         {
             title: 'Task #5',
             description: 'This task is fake, so make sure it has high priority',
             dueDate: '2020-12-25',
-            category: "Completed"
+            category: "To-Do"
         }
     ],
     users: [

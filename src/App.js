@@ -88,6 +88,10 @@ class App extends Component{
     })
   }
 
+  forceRender = () => {
+    this.forceUpdate();
+  }
+
   openLogin = () => {
     this.setState({
       loginClick: true
@@ -139,6 +143,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              forceRender={this.forceRender}
             />
             <List 
               user={this.state.user}
@@ -148,6 +153,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              forceRender={this.forceRender}
             />
             <List 
               user={this.state.user}
@@ -157,6 +163,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              forceRender={this.forceRender}
             />
             
           </Main>

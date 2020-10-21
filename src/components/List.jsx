@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Task from './Task'
@@ -9,9 +9,10 @@ import { useDrop } from 'react-dnd';
 function List(props) {
     const [listData, setListData] = useState({
         category: props.category,
-        tasks: props,
         droppedTask: null
     })
+
+    const [tasks,setTasks] = useState(props.tasks);
 
     const FormHeader = styled.h2`
         text-align: center;
@@ -58,25 +59,6 @@ function List(props) {
         justify-content: flex-start;
         ${categoryStyles}
     `
-    
-    const listItems = [];
-
-    if(props.tasks) {
-        props.tasks.map((task, id) => (
-            listItems.push(
-                <Task 
-                    user={props.user}
-                    task={task} 
-                    key={id} 
-                    handleDeleteTask={props.handleDeleteTask} 
-                    handleMoveTask={props.handleMoveTask} 
-                    handleSelectList={props.handleSelectList} 
-                    catSelected={props.catSelected}
-                    trackDraggedTask={()=>trackDraggedTask(task.title)}
-                />
-            )
-        ))
-    }
 
     function trackDraggedTask(taskTitle) {
         console.log(taskTitle)
@@ -88,13 +70,44 @@ function List(props) {
         return null;
     }
 
+    const moveTask = useCallback((draggedTaskIndex,hoveredTaskIndex) => {
+        console.log('have we made it here?')
+        console.log(tasks)
+        tasks.splice(hoveredTaskIndex,0,tasks.splice(draggedTaskIndex,1)[0])
+        setTasks(tasks);
+
+        console.log(tasks)
+    },[tasks])
+
     const [{isOver},drop] = useDrop({
         accept: 'task',
-        drop: (innerProps) => props.handleDragTask(innerProps.title,listData.category),
+        hover: (item,monitor) => props.handleDragTask(item.title,listData.category),
+        drop: () => props.forceRender(),
         collect: (monitor) => ({
             isOver: !!monitor.isOver()
         })
     })
+
+    const listItems = [];
+
+    if(tasks) {
+        tasks.map((task, index) => (
+            listItems.push(
+                <Task 
+                    user={props.user}
+                    task={task} 
+                    index={index} 
+                    key={index}
+                    handleDeleteTask={props.handleDeleteTask} 
+                    handleMoveTask={props.handleMoveTask} 
+                    handleSelectList={props.handleSelectList} 
+                    catSelected={props.catSelected}
+                    trackDraggedTask={()=>trackDraggedTask(task.title)}
+                    moveTask={moveTask}
+                />
+            )
+        ))
+    }
 
     return(
         <div 
