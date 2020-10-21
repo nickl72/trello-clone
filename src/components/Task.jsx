@@ -36,7 +36,7 @@ const Card = styled.div`
 
     h3, h4 {
         margin: 0;
-        padding 10px;
+        padding: 10px;
     }
     
     img{
@@ -88,8 +88,7 @@ const Card = styled.div`
     .taskCategory {
         width: 100%;
         margin-top: 5px;
-    }
-        
+    }       
 `
 
 const Button = styled.button`
@@ -217,7 +216,7 @@ function Task(props) {
     }
 
     return(
-        <Card ref={drag} isDragging={isDragging}>
+        <Card ref={drag} isDragging={isDragging} onDoubleClick={() => {openCard(props.task)}}>
 
             <div className='title-box'>
                 <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>

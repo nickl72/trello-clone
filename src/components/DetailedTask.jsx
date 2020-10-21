@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
 import Updated from './Updated';
@@ -127,7 +127,7 @@ const Button = styled.button`
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #ce3323;
     &:hover {
-        background-color: #ff6656
+        background-color: #ff6656;
     }
     
 `
@@ -180,18 +180,24 @@ function DetailedTask(props) {
         }
     }
 
+
     const handleUpdate = (e) => {
         e.preventDefault();
         setUpdated({
             show: true
         })
-        setTimeout(function(){setUpdated({
-                    show: false
-                    })}, 2000);
+        setTimeout(function(){
+            setUpdated({show: false})}, 2000);
+    }
+
+    const localCloseCard = (e) => {
+        if (e.currentTarget === e.target) {
+            props.closeCard();
+        }
     }
 
     return(
-        <Div>
+        <Div onClick={(e) => localCloseCard(e)}>
             <DetailedCard>
                 <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
@@ -200,7 +206,7 @@ function DetailedTask(props) {
                     <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
-                        <label for="private">Private Task:</label>
+                        <label htmlFor="private">Private Task:</label>
                         <input type='checkbox' name='private' onChange={() => {props.user && setDetailedTask({description: detailedTask.description, dueDate: detailedTask.dueDate, private: !detailedTask.private})}}
                             checked={detailedTask.private}
                         ></input>
