@@ -73,6 +73,7 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
+            tasks: [],
             error: null
         }
 
@@ -80,13 +81,15 @@ class LoginForm extends Component {
 
     login = (e) => {
         e.preventDefault();
-
-        if (this.props.users.find((user,i) => {
+        const userLoggingIn = this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
                 user.password === this.state.password) {
                     return true
-                }})) {
-            this.props.login(this.state)
+                }
+            })
+
+        if (userLoggingIn) {
+            this.props.login(userLoggingIn)
         } else {
             this.setState({
                 error: 'Incorrect Credentials'
@@ -106,7 +109,7 @@ class LoginForm extends Component {
             <Div onClick={(e) => this.props.handleClick(e)}>
                 <Form>
                     <TitleP>Log In to <Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
-                    <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off'/>
+                    <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off' autoFocus/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
                     {this.state.error && <RedP>{this.state.error}</RedP>}
