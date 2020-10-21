@@ -190,6 +190,12 @@ function Task(props) {
             newCategory: "",
         })
     }
+
+    const localHandleDelete = (e, task) => {
+        cancelClick()
+
+        props.handleDeleteTask(e, props.task)
+    }
         
     const openCard = () => {
         setDetailedTask({
@@ -224,7 +230,7 @@ function Task(props) {
                     </svg>
                     Delete Task
                 </Button>
-                {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={cancelClick}/> : null}
+                {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={cancelClick} localHandleDelete={localHandleDelete}/> : null}
                 <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
                     <select name="category" defaultValue = {defaultCategory(taskData.category)}>
                         <option value="To-Do">To-Do</option>
