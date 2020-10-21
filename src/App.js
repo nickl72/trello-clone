@@ -84,6 +84,20 @@ class App extends Component{
     })
   }
 
+  handleEditTask = (e, taskId, edits) => {
+    e.preventDefault();
+    const taskToEdit = this.state.tasks.filter(task => task.taskId === taskId)[0];
+    const taskIndex = this.state.tasks.indexOf(taskToEdit);
+    const allTasks = this.state.tasks;
+    taskToEdit.description = edits.description;
+    taskToEdit.dueDate = edits.dueDate;
+    taskToEdit.private = edits.private;
+    allTasks[taskIndex] = taskToEdit;
+    this.setState({
+      tasks: allTasks
+    })
+  }
+
   handleDragTask = (taskTitle,categoryName) => {
     console.log('Task: '+taskTitle);
     console.log('Category: '+categoryName);
@@ -108,6 +122,7 @@ class App extends Component{
       loginClick: bool
     })
   }
+
   
 
   render(){
@@ -186,6 +201,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             <List 
               user={this.state.user}
@@ -195,6 +211,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             <List 
               user={this.state.user}
@@ -204,6 +221,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             
           </Main>

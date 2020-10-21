@@ -27,6 +27,9 @@ const Button = styled.button`
     border: none;
     cursor: pointer;
     font-family: jaf-facitweb,Helvetica Neue,Arial,sans-serif;
+    &:hover {        
+        background: linear-gradient(to bottom, #5aac44 0, #519839 100%);
+    }
 `
 
 const Logo = styled.img`
@@ -52,6 +55,8 @@ const Header = (props) => {
     }
 
     const handleClick = (e) => {
+        console.log(e.currentTarget);
+        console.log(e.target);
         if (e.currentTarget === e.target ) {
             if (loginData.loggedIn) {
                 props.login(null)

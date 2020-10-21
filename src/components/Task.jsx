@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import DetailedTask from './DetailedTask'
 import ConfirmDelete from "./ConfirmDelete";
 import { useDrag } from 'react-dnd';
 
@@ -54,7 +55,7 @@ const Card = styled.div`
         justify-content: space-around;
         width: 100%;
         font-size: 12px;
-        background: rgba(211, 211, 211, .6);
+        background: rgba(211, 211, 211, .4);
         margin: 0;
         padding: 0;
         height: 30px;
@@ -67,7 +68,7 @@ const Card = styled.div`
         color: green;
     }
     .today {
-        color: gold;
+        color: #D9B51C;
         font-weight: bold;
     }
     .late {
@@ -77,10 +78,16 @@ const Card = styled.div`
 
     .editActions {
         display: flex;
-        flex-wrap: wrap;
-        width: 100%;
+        flex-flow: row wrap;
+        align-items: center;
         justify-content: space-around;
-        margin: 8px 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    .taskCategory {
+        width: 100%;
+        margin-top: 5px;
     }
         
 `
@@ -88,12 +95,12 @@ const Card = styled.div`
 const Button = styled.button`
     display:flex;
     align-items: center;
+    margin: 15px 0;
     border: none;
     border-radius: 4px;
     padding: 5px;
     color: white;
     font-weight: bold;
-    margin-bottom: 15px;
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #ce3323;
     &:hover {
@@ -107,7 +114,8 @@ const MoveButton = styled(Button)`
     &:hover {
         background-color: #fdc788;
     }
-    margin:0;
+    margin-top: 5px;
+    width: 100%;
 `
 
 
@@ -116,6 +124,10 @@ function Task(props) {
         category: props.task.category,
         newCategory: "",
         deleteClick: false
+    })
+
+    const [detailedTask, setDetailedTask] = useState({
+        show: false
     })
     
     const whenDue = (dueDate) => {
@@ -169,7 +181,8 @@ function Task(props) {
     },[])// eslint-disable-line react-hooks/exhaustive-deps
     // Above eslint... disables the warning from the empty array, stopping the infinite loop.
 
-    const deleteTaskClick = () => {
+    const deleteTaskClick = (e) => {
+        e.preventDefault();
         setTaskData({
             deleteClick: true,
             category: props.task.category,
@@ -191,10 +204,23 @@ function Task(props) {
         props.handleDeleteTask(e, props.task)
     }
         
+    const openCard = () => {
+        setDetailedTask({
+            show: true
+        })
+    }
+
+    const closeCard = () => {
+        setDetailedTask({
+            show: false
+        })
+    }
+
     return(
         <Card ref={drag} isDragging={isDragging}>
+
             <div className='title-box'>
-                <h3>{props.task.title}</h3>
+                <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>
                 <h4>{props.task.user}</h4>
             </div>
             <p className="description">{props.task.description}</p>
@@ -213,7 +239,7 @@ function Task(props) {
                 </Button>
                 {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={cancelClick} localHandleDelete={localHandleDelete}/> : null}
                 <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
-                    <select name="category" defaultValue = {defaultCategory(taskData.category)}>
+                    <select className='taskCategory' name="category" defaultValue = {defaultCategory(taskData.category)}>
                         <option value="To-Do">To-Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
@@ -227,6 +253,13 @@ function Task(props) {
                 </form>
               </div>
               :  null }
+                {detailedTask.show ? 
+                    <DetailedTask user={props.user} task={props.task} closeCard={closeCard}
+                     deleteTaskClick={deleteTaskClick} cancelClick={cancelClick}
+                     whenDue={whenDue} defaultCategory={defaultCategory}
+                     taskData={taskData} setTaskData={setTaskData}
+                     handleMoveTask={props.handleMoveTask}
+                     handleEditTask={props.handleEditTask}/> : null}
             </Card>
     )
     
