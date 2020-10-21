@@ -80,9 +80,8 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
-            error: null,
+            admin: false,
             signUp: false,
-            tasks: [],
             error: null
         }
 
@@ -108,7 +107,10 @@ class LoginForm extends Component {
         } else {
             if (this.state.signUp) {
                 if (this.state.username && this.state.password) {
-                    this.props.login({password: this.state.password, username: this.state.username, tasks:[]}, true) // Logs in new user
+                    this.props.login({
+                        password: this.state.password, 
+                        username: this.state.username, 
+                        admin: false}, true) // Logs in new user
                 } else {
                     error = 'Username and Password cannot be blank';
                 }
