@@ -86,7 +86,16 @@ class App extends Component{
 
   handleEditTask = (e, taskId, edits) => {
     e.preventDefault();
-    console.log(edits);
+    const taskToEdit = this.state.tasks.filter(task => task.taskId === taskId)[0];
+    const taskIndex = this.state.tasks.indexOf(taskToEdit);
+    const allTasks = this.state.tasks;
+    taskToEdit.description = edits.description;
+    taskToEdit.dueDate = edits.dueDate;
+    taskToEdit.private = edits.private;
+    allTasks[taskIndex] = taskToEdit;
+    this.setState({
+      tasks: allTasks
+    })
   }
 
   handleDragTask = (taskTitle,categoryName) => {
