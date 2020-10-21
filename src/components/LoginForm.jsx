@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { zoomIn } from 'react-animations';
+import { zoomIn, zoomOut } from 'react-animations';
 
 const slideAnimation = keyframes`${zoomIn}`;
+const slideAnimation2 = keyframes`${zoomOut}`;
 
 const Div = styled.div`
     position: fixed;
@@ -16,6 +17,12 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    .fadeIn {
+        animation: ${slideAnimation} .5s;
+    }
+    .fadeOut {
+        animation: ${slideAnimation2} .5s;
+    }
 `
 const Form = styled.form`
     display: flex;
@@ -27,7 +34,9 @@ const Form = styled.form`
     box-shadow: 1px 1px 10px 1px black;
     color: black;
     text-align: center;
-    animation: ${slideAnimation} .5s;
+
+    
+    
 `
 
 const Input = styled.input`
@@ -78,35 +87,39 @@ class LoginForm extends Component {
         super(props)
 
         this.state = {
-            username: null,
-            password: null,
+            username: "",
+            password: "",
             admin: false,
             signUp: false,
-            error: null
+            error: null,
+            show: true
         }
 
     }
 
     login = (e, signUp = false) => {
         e.preventDefault();
-        console.log(this.props.users)
         let error;
 
         const foundUser = this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
                 (user.password === this.state.password || this.state.signUp)) {
                     return true
-                }
+                } 
+                return false
             })
 
         if (foundUser && !this.state.signUp) {
+            this.setState({show: false})
             this.props.login(foundUser) // Logs in created user
+
         } else if (foundUser) {
             error = 'Username is unavailable'
             this.setState({error})
         } else {
             if (this.state.signUp) {
                 if (this.state.username && this.state.password) {
+                    this.setState({show: false})
                     this.props.login({
                         password: this.state.password, 
                         username: this.state.username, 
@@ -128,11 +141,19 @@ class LoginForm extends Component {
         })
     }
 
+    localHandleClick = (e) => {
+        if (e.currentTarget===e.target) {
+        this.setState({show: false}) }
+        this.props.handleClick(e)
+    }
+
     render() {
         return (
-            <Div onClick={(e) => this.props.handleClick(e)}>
-                <Form>
-                    <TitleP>{ this.state.signUp ? 'Sign up For ' : 'Log In to '}<Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
+
+            <Div onClick={(e) => this.localHandleClick(e)}>
+                <Form className={this.state.show ? "fadeIn" : "fadeOut"}>
+                    <TitleP>Log In to <Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
+
                     <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off' autoFocus/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
                     <Button type='submit' value={this.state.signUp ? 'Sign Up':'Log In'} onClick={(e) => this.login(e)}/>
