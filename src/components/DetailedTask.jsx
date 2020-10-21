@@ -127,7 +127,7 @@ const Button = styled.button`
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #ce3323;
     &:hover {
-        background-color: #ff6656
+        background-color: #ff6656;
     }
     
 `
@@ -175,8 +175,14 @@ function DetailedTask(props) {
         }
     }
 
+    const localCloseCard = (e) => {
+        if (e.currentTarget === e.target) {
+            props.closeCard();
+        }
+    }
+
     return(
-        <Div>
+        <Div onClick={(e) => localCloseCard(e)}>
             <DetailedCard>
                 <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
