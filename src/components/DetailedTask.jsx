@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
 
@@ -191,7 +191,7 @@ function DetailedTask(props) {
                     <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
-                        <label for="private">Private Task:</label>
+                        <label htmlFor="private">Private Task:</label>
                         <input type='checkbox' name='private' onChange={() => {props.user && setDetailedTask({description: detailedTask.description, dueDate: detailedTask.dueDate, private: !detailedTask.private})}}
                             checked={detailedTask.private}
                         ></input>
