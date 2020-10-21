@@ -15,8 +15,8 @@ const Div = styled.div`
     align-items: center;
 `
 const Modal = styled.div`
-    height: 80%;
-    width: 95%;
+    height: 360px;
+    width: 450px;
     background: white;
     border: solid 3px black;
     border-radius: 5px;
@@ -101,9 +101,14 @@ const Icon = styled.div`
 `
 
 function ConfirmDelete(props) {
-
+    
+    const localCloseDelete = (e) => {
+        if (e.currentTarget === e.target) {
+            props.cancelClick();
+        }
+    }
     return(
-        <Div>
+        <Div onClick={(e) => localCloseDelete(e)}>
             <Modal>
                 <ModalTop>
                     <Icon>

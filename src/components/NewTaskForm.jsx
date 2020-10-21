@@ -18,7 +18,7 @@ const Form = styled.form`
 
 const Submit = styled.input`
     border-radius: 5px;
-    border-color: #0C3953;
+    border: none;
     padding: 15px 25px; 
     font-size: 18px;
     text-decoration: none;
@@ -27,7 +27,7 @@ const Submit = styled.input`
     position: relative;
     display: inline-block;
     background-color: #0079BF;
-    box-shadow: 0px 5px 0px 0px #026AA7;
+    box-shadow: 0px 5px 0px 0px #055A8C;
     &:hover{
         background-color: #5BA4CF;
     }
