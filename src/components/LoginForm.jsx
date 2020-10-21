@@ -74,7 +74,9 @@ class LoginForm extends Component {
             username: null,
             password: null,
             error: null,
-            signUp: false
+            signUp: false,
+            tasks: [],
+            error: null
         }
 
     }
@@ -84,18 +86,15 @@ class LoginForm extends Component {
         console.log(this.props.users)
         let error;
 
-        if (this.props.users.find((user,i) => {
+        const userLoggingIn = this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
-                (user.password === this.state.password || this.state.signUp)) {
-                        return true
-                    }
-        })) {
-            if (this.state.signUp) {
-                error = 'Username is unavailable'
-                this.setState({error})
-            }  else (
-                this.props.login({username: this.state.username})
-            )
+                user.password === this.state.password) {
+                    return true
+                }
+            })
+
+        if (userLoggingIn) {
+            this.props.login(userLoggingIn)
         } else {
             
             if (this.state.username && this.state.password) {

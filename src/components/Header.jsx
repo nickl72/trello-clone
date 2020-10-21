@@ -67,7 +67,9 @@ const Header = (props) => {
     return (
         <AppHeader>
             <Logo className='not-trello' src='./NotTrello.png' onClick={props.notTrello}/>
-            <Button onClick={handleClick}>{loginData.loggedIn ? 'Log Out' : 'Log In' }</Button>
+            <Button onClick={handleClick}>
+                {loginData.loggedIn ? 'Log Out' : 'Log In' }
+            </Button>
             {props.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login} notTrello={props.notTrello}/> : null }
         </AppHeader>
     )
