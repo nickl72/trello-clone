@@ -16,7 +16,6 @@ const Form = styled.form`
     height: 100%;
 `
 
-
 const Submit = styled.input`
     border-radius: 5px;
     border-color: #0C3953;
@@ -33,6 +32,7 @@ const Submit = styled.input`
         background-color: #5BA4CF;
     }
 `
+
 const FormHeader = styled.h2`
     text-align: center;
     margin: 10px;
@@ -41,6 +41,7 @@ const FormHeader = styled.h2`
 const Title = styled.input`
     animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"}
 `
+
 const Date = styled.input`
     animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"}
 `
@@ -49,19 +50,24 @@ class NewTaskForm extends Component{
     constructor(props){
         super(props);
         this.state = {
+                taskId: 11,
                 title: null,
+                user: null,
                 description: null,
                 dueDate: null,
-                category: "To-Do"
+                category: "To-Do",
+                private: true
         }
     }
     handleInputChange = (e) => {
+        console.log(e.target)
         this.setState({
             [e.target.name] : e.target.value
         })
     }
     handleCreateAttempt = (e) => {
         e.preventDefault();
+        
         if(this.props.user) {
             if ((this.state.title === "" || this.state.title === null) && (this.state.dueDate === "" ||this.state.dueDate === null)){
                 this.badTitle=true;
@@ -80,14 +86,19 @@ class NewTaskForm extends Component{
                 return false;
             }
             else{
-                this.props.handleCreateTask(e,this.state);
+                const newTask = this.state;
+                newTask.user = this.props.user.username;
+                this.props.handleCreateTask(e,newTask);
                 let form = document.getElementById("form");
                 form.reset();
                 this.setState({
+                    taskId: this.state.taskId + 1,
                     title: null,
+                    user: this.props.user.username,
                     description: null,
                     dueDate: null,
-                    category: "To-Do"
+                    category: "To-Do",
+                    private: true
                 })
             }
         }
@@ -127,7 +138,14 @@ class NewTaskForm extends Component{
                     <option value="To-Do">To-Do</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
-                </select><br/> 
+                </select>
+                <label for="private">Make Task Private:</label>
+                <input type='checkbox' name='private'
+                    onChange={(e) => {
+                        this.setState({private: !this.state.private})
+                    }}
+                    checked={this.state.private}
+                ></input>
                 <Submit type="submit" value="Create Task"></Submit>
             </Form>
         )

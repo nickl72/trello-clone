@@ -24,6 +24,7 @@ class App extends Component{
 
     this.state ={
       users: data.users,
+      tasks: data.tasks,
       user: null,
       loginClick: false,
       notTrello: false,
@@ -33,8 +34,18 @@ class App extends Component{
     
   }
 
-  login = (user) => {
-    this.setState({user})
+  login = (user, newUser) => {
+    if (newUser) {
+      const users = this.state.users;
+      users.push(user)
+      this.setState({
+        users,
+        user        
+      })
+
+    } else {
+      this.setState({user})
+    }
   }
 
   handleCreateTask = (e,newTask) => {
@@ -76,7 +87,7 @@ class App extends Component{
   handleDragTask = (taskTitle,categoryName) => {
     console.log('Task: '+taskTitle);
     console.log('Category: '+categoryName);
-    let allTasks = this.state.user.tasks;
+    let allTasks = this.state.tasks;
     const foundTask = allTasks.filter(task => task.title === taskTitle)[0];
     const index = allTasks.indexOf(foundTask);
 
@@ -105,23 +116,45 @@ class App extends Component{
     const inProgressList = [];
     const completedList = [];
 
+
+
     if(this.state.user) {
-      console.log(this.state.user)
-      this.state.user.tasks.map((task, id) => {
-  
-        switch(task.category) {
-          case "To-Do":
-            toDoList.push(task);
-            break;
-          case "In Progress":
-            inProgressList.push(task);
-            break;
-          case "Completed":
-            completedList.push(task);
-            break;
-          default:
-            // console.error("Task category not recognized.")
-            // console.error(task);
+      this.state.tasks.map((task, id) => {
+        if(task.user === this.state.user.username){
+          switch(task.category) {
+            case "To-Do":
+              toDoList.push(task);
+              break;
+            case "In Progress":
+              inProgressList.push(task);
+              break;
+            case "Completed":
+              completedList.push(task);
+              break;
+            default:
+              console.error("Task category not recognized.")
+              console.error(task);
+          }
+        }
+        return 0;
+      })
+    } else {
+      this.state.tasks.map((task, id) => {
+        if(task.private === false){
+          switch(task.category) {
+            case "To-Do":
+              toDoList.push(task);
+              break;
+            case "In Progress":
+              inProgressList.push(task);
+              break;
+            case "Completed":
+              completedList.push(task);
+              break;
+            default:
+              console.error("Task category not recognized.")
+              console.error(task);
+          }
         }
         return 0;
       })
