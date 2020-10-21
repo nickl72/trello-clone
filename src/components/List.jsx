@@ -12,8 +12,7 @@ const FormHeader = styled.h2`
 
 const StyledList = styled.div`
     border-radius: 10px;
-    margin: 15px;
-    width: 20vw;
+    margin: 0;
     padding-bottom: 15px;
     display: flex;
     flex-flow: column nowrap;
@@ -21,6 +20,9 @@ const StyledList = styled.div`
 `
 
 const ConditionalStlye = styled.div`
+    margin: 15px;
+    padding: 0;
+    width: 20%;
     .To-Do {
         background: #EFB3AB;
         border: solid #EB5A46;  

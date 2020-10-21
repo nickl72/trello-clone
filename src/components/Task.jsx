@@ -69,6 +69,7 @@ const Card = styled.div`
 
     .editActions {
         display: flex;
+        flex-wrap: wrap;
         width: 100%;
         justify-content: space-around;
         margin: 8px 0;
@@ -84,6 +85,7 @@ const Button = styled.button`
     padding: 5px;
     color: white;
     font-weight: bold;
+    margin-bottom: 15px;
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #ce3323;
     &:hover {
@@ -97,6 +99,7 @@ const MoveButton = styled(Button)`
     &:hover {
         background-color: #fdc788;
     }
+    margin:0;
 `
 
 

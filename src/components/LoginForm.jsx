@@ -89,7 +89,6 @@ class LoginForm extends Component {
 
     login = (e, signUp = false) => {
         e.preventDefault();
-        console.log(this.props.users)
         let error;
 
         const foundUser = this.props.users.find((user,i) => {
