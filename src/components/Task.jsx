@@ -207,7 +207,7 @@ function Task(props) {
                 </form>
               </div>
               :  null }
-                {detailedTask.show ? <DetailedTask task={props.task} closeCard={closeCard}/> : null}
+                {detailedTask.show ? <DetailedTask user={props.user} task={props.task} closeCard={closeCard}/> : null}
             </Card>
     )
     
