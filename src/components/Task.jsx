@@ -207,7 +207,7 @@ function Task(props) {
         <Card ref={drag} isDragging={isDragging}>
 
             <div className='title-box'>
-                <h3 onClick={() => {openCard(props.task)}}>{props.task.title}>{props.task.title}</h3>
+                <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>
                 <h4>{props.task.user}</h4>
             </div>
             <p className="description">{props.task.description}</p>
