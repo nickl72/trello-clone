@@ -53,6 +53,7 @@ const TextArea = styled.textarea`
 `
 const Date = styled.input`
     animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"};
+    width: 90%;
 `
 
 class NewTaskForm extends Component{
