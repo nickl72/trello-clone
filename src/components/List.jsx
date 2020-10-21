@@ -60,16 +60,6 @@ function List(props) {
         ${categoryStyles}
     `
 
-    function trackDraggedTask(taskTitle) {
-        console.log(taskTitle)
-        setListData({
-            category: listData.category,
-            tasks: listData.tasks,
-            droppedTask: taskTitle
-        })
-        return null;
-    }
-
     const moveTask = useCallback((draggedTaskIndex,hoveredTaskIndex) => {
         console.log('have we made it here?')
         console.log(tasks)
@@ -102,7 +92,6 @@ function List(props) {
                     handleMoveTask={props.handleMoveTask} 
                     handleSelectList={props.handleSelectList} 
                     catSelected={props.catSelected}
-                    trackDraggedTask={()=>trackDraggedTask(task.title)}
                     moveTask={moveTask}
                 />
             )

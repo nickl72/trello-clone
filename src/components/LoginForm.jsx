@@ -97,7 +97,7 @@ class LoginForm extends Component {
                 (user.password === this.state.password || this.state.signUp)) {
                     return true
                 }
-            })
+        })
 
         if (foundUser && !this.state.signUp) {
             this.props.login(foundUser) // Logs in created user

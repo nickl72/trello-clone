@@ -159,7 +159,7 @@ function Task(props) {
 
             props.moveTask(dragIndex,hoverIndex);
 
-            item.index = hoverIndex;
+            // item.index = hoverIndex;
         }
     })
     
@@ -191,7 +191,6 @@ function Task(props) {
         })
     },[])
 
-    drag(drop(ref))
     const deleteTaskClick = () => {
         setTaskData({
             deleteClick: true,
@@ -207,7 +206,9 @@ function Task(props) {
             newCategory: "",
         })
     }
-        
+
+    drag(drop(ref))
+
     return(
         <Card ref={ref} isDragging={isDragging}>
             <h3>{props.task.title}</h3>

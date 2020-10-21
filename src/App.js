@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useCallback, useEffect } from 'react';
 import './App.css';
 import styled from 'styled-components'
 
@@ -18,195 +18,182 @@ const Main = styled.main`
   justify-content: center;
 `
 
-class App extends Component{
-  constructor(props){
-    super(props);
+function App(props) {
 
-    this.state ={
-      users: data.users,
-      tasks: data.tasks,
-      user: null,
-      loginClick: false,
-      notTrello: false,
-    }
+  const [users,setUsers] = useState(data.users)
+  const [tasks,setTasks] = useState(data.tasks)
+  const [user,setUser] = useState(null)
+  const [appData,setAppData] = useState({
+    loginClick: false,
+    notTrello: false,
+    activeElement: null
+  })
 
-    this.activeElement = null;
-    
-  }
+  useEffect(() => {
+    console.log('I have rendered')
+  })
 
-  login = (user, newUser) => {
+  const login = (user, newUser) => {
     if (newUser) {
-      const users = this.state.users;
       users.push(user)
-      this.setState({
-        users,
-        user        
-      })
-
+      setUsers(users)
+      setUser(user)
     } else {
-      this.setState({user})
+      setUser()
     }
   }
 
-  handleCreateTask = (e,newTask) => {
+  const handleCreateTask = (e,newTask) => {
+    console.log('im making a new task')
     e.preventDefault();
-    const tasks = this.state.tasks;
     tasks.push(newTask);
-    this.setState({tasks})
+    setTasks([...tasks])
   }
 
-  onMouseEnter = (category) => {
-    console.log(category);
-    // this.activeElement = e.target.id;
-  }
-
-  onMouseLeave = () => {
-    console.log(null);
-  }
-
-  handleDeleteTask = (e, deleteTask) => {
+  const handleDeleteTask = (e, deleteTask) => {
     e.preventDefault();
-    const tasks = this.state.tasks;
     const index = tasks.findIndex(t => t.title === deleteTask.title); 
     tasks.splice(index,1)
-    this.setState({
-      tasks
-    })
+    setTasks([...tasks])
   }
 
-  handleMoveTask = (e, task, cat) => {
+  const handleMoveTask = (e, task, cat) => {
     e.preventDefault();
-    const tasks = this.state.tasks;
     const index = tasks.findIndex(t => t.title === task.title);
     tasks[index].category = cat;
-    this.setState({
-      tasks
-    })
+    setTasks([...tasks]);
   }
 
-  handleDragTask = (taskTitle,categoryName) => {
-    console.log('Task: '+taskTitle);
-    console.log('Category: '+categoryName);
-    let allTasks = this.state.tasks;
-    const foundTask = allTasks.filter(task => task.title === taskTitle)[0];
-    const index = allTasks.indexOf(foundTask);
+  const handleDragTask = useCallback((taskTitle,categoryName) => {
+    const foundTask = tasks.filter(task => task.title === taskTitle)[0];
+    const index = tasks.indexOf(foundTask);
 
-    allTasks[index].category = categoryName;
+    tasks[index].category = categoryName;
 
-    this.setState({
-      tasks: allTasks
-    })
+    setTasks([...tasks]);
+  },[tasks])
+
+  const forceRender = () => {
+    setTasks([...tasks]);
   }
 
-  forceRender = () => {
-    this.forceUpdate();
+  const openLogin = () => {
+    setAppData({...appData,loginClick: true})
   }
 
-  openLogin = () => {
-    this.setState({
-      loginClick: true
-    })
-  }
-  updateLoginClick = (bool) => {
-    this.setState({
-      loginClick: bool
-    })
+  const updateLoginClick = (bool) => {
+    setAppData({...appData,loginClick: bool})
   }
   
+  const toDoList = [];
+  const inProgressList = [];
+  const completedList = [];
 
-  render(){
-    const toDoList = [];
-    const inProgressList = [];
-    const completedList = [];
-
-
-
-    if(this.state.user) {
-      this.state.tasks.map((task, id) => {
-        if(task.user === this.state.user.username){
-          switch(task.category) {
-            case "To-Do":
-              toDoList.push(task);
-              break;
-            case "In Progress":
-              inProgressList.push(task);
-              break;
-            case "Completed":
-              completedList.push(task);
-              break;
-            default:
-              console.error("Task category not recognized.")
-              console.error(task);
-          }
-        }
-        return 0;
-      })
+  const filterTasks = (category) => {
+    console.log('User: '+user);
+    if (user) {
+      const filtered = tasks.filter(task => task.category === category && task.user === user.username)
+      console.log(filtered);
+      return filtered;
     } else {
-      this.state.tasks.map((task, id) => {
-        if(task.private === false){
-          switch(task.category) {
-            case "To-Do":
-              toDoList.push(task);
-              break;
-            case "In Progress":
-              inProgressList.push(task);
-              break;
-            case "Completed":
-              completedList.push(task);
-              break;
-            default:
-              console.error("Task category not recognized.")
-              console.error(task);
-          }
-        }
-        return 0;
-      })
+      return tasks.filter(task => task.category === category && task.private === false)
     }
-
-
-    return (
-      <DndProvider backend={HTML5Backend}>
-        <div className={this.state.notTrello ? "App invert" : "App"}>
-          <Header users={this.state.users} login={this.login} loginClick={this.state.loginClick} updateLoginClick={this.updateLoginClick} notTrello={() => this.setState({notTrello: !this.state.notTrello})}/>
-          <Main>
-            <NewTaskForm handleCreateTask={this.handleCreateTask} user={this.state.user} openLogin={this.openLogin} />
-            <List 
-              user={this.state.user}
-              category={"To-Do"} 
-              tasks={toDoList}
-              handleDeleteTask={this.handleDeleteTask} 
-              handleMoveTask={this.handleMoveTask} 
-              handleSelectList={this.handleSelectList}
-              handleDragTask={this.handleDragTask}
-              forceRender={this.forceRender}
-            />
-            <List 
-              user={this.state.user}
-              category={"In Progress"} 
-              tasks={inProgressList}
-              handleDeleteTask={this.handleDeleteTask} 
-              handleMoveTask={this.handleMoveTask} 
-              handleSelectList={this.handleSelectList}
-              handleDragTask={this.handleDragTask}
-              forceRender={this.forceRender}
-            />
-            <List 
-              user={this.state.user}
-              category={"Completed"} 
-              tasks={completedList}  
-              handleDeleteTask={this.handleDeleteTask} 
-              handleMoveTask={this.handleMoveTask} 
-              handleSelectList={this.handleSelectList}
-              handleDragTask={this.handleDragTask}
-              forceRender={this.forceRender}
-            />
-            
-          </Main>
-          <Footer notTrello={() => this.setState({notTrello: !this.state.notTrello})}/>
-        </div>
-      </DndProvider>
-    );
   }
+
+  // if(user) {
+  //   tasks.map((task, id) => {
+  //     if(task.user === user.username){
+  //       switch(task.category) {
+  //         case "To-Do":
+  //           toDoList.push(task);
+  //           break;
+  //         case "In Progress":
+  //           inProgressList.push(task);
+  //           break;
+  //         case "Completed":
+  //           completedList.push(task);
+  //           break;
+  //         default:
+  //           console.error("Task category not recognized.")
+  //           console.error(task);
+  //       }
+  //     }
+  //     return 0;
+  //   })
+  // } else {
+  //   tasks.map((task, id) => {
+  //     if(task.private === false){
+  //       switch(task.category) {
+  //         case "To-Do":
+  //           toDoList.push(task);
+  //           break;
+  //         case "In Progress":
+  //           inProgressList.push(task);
+  //           break;
+  //         case "Completed":
+  //           completedList.push(task);
+  //           break;
+  //         default:
+  //           console.error("Task category not recognized.")
+  //           console.error(task);
+  //       }
+  //     }
+  //     return 0;
+  //   })
+  // }
+
+
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className={appData.notTrello ? "App invert" : "App"}>
+        <Header 
+          users={users} 
+          login={login} 
+          loginClick={appData.loginClick} 
+          updateLoginClick={updateLoginClick} 
+          notTrello={() => setAppData({...appData, notTrello: !appData.notTrello})}
+        />
+
+        <Main>
+          <NewTaskForm 
+            handleCreateTask={handleCreateTask} 
+            user={user} 
+            openLogin={openLogin} 
+          />
+          <List 
+            user={user}
+            category={"To-Do"} 
+            tasks={()=>filterTasks('To-Do')}
+            handleDeleteTask={handleDeleteTask} 
+            handleMoveTask={handleMoveTask} 
+            handleDragTask={handleDragTask}
+            forceRender={forceRender}
+          />
+          <List 
+            user={user}
+            category={"In Progress"} 
+            tasks={()=>filterTasks('In Progress')}
+            handleDeleteTask={handleDeleteTask} 
+            handleMoveTask={handleMoveTask} 
+            handleDragTask={handleDragTask}
+            forceRender={forceRender}
+          />
+          <List 
+            user={user}
+            category={"Completed"} 
+            tasks={()=>filterTasks('Completed')} 
+            handleDeleteTask={handleDeleteTask} 
+            handleMoveTask={handleMoveTask} 
+            handleDragTask={handleDragTask}
+            forceRender={forceRender}
+          />
+          
+        </Main>
+        <Footer 
+          notTrello={() => setAppData({...appData, notTrello: !appData.notTrello})}/>
+      </div>
+    </DndProvider>
+  );
 }
 
 export default App;

@@ -59,7 +59,6 @@ class NewTaskForm extends Component{
         }
     }
     handleInputChange = (e) => {
-        console.log(e.target)
         this.setState({
             [e.target.name] : e.target.value
         })
