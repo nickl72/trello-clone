@@ -25,9 +25,8 @@ class App extends Component{
     this.state ={
       users: data.users,
       user: null,
-      tasks: data.tasks,
       loginClick: false,
-      notTrello: false
+      notTrello: false,
     }
 
     this.activeElement = null;
@@ -105,24 +104,27 @@ class App extends Component{
     const inProgressList = [];
     const completedList = [];
 
-    this.state.tasks.map((task, id) => {
-
-      switch(task.category) {
-        case "To-Do":
-          toDoList.push(task);
-          break;
-        case "In Progress":
-          inProgressList.push(task);
-          break;
-        case "Completed":
-          completedList.push(task);
-          break;
-        default:
-          // console.error("Task category not recognized.")
-          // console.error(task);
-      }
-      return 0;
-    })
+    if(this.state.user) {
+      console.log(this.state.user)
+      this.state.user.tasks.map((task, id) => {
+  
+        switch(task.category) {
+          case "To-Do":
+            toDoList.push(task);
+            break;
+          case "In Progress":
+            inProgressList.push(task);
+            break;
+          case "Completed":
+            completedList.push(task);
+            break;
+          default:
+            // console.error("Task category not recognized.")
+            // console.error(task);
+        }
+        return 0;
+      })
+    }
 
 
     return (

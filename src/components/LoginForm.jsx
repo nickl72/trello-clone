@@ -73,6 +73,7 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
+            tasks: [],
             error: null
         }
 
@@ -80,14 +81,17 @@ class LoginForm extends Component {
 
     login = (e) => {
         e.preventDefault();
-        console.log(this.props.users)
+        console.log(this.props.users);
 
-        if (this.props.users.find((user,i) => {
+        const userLoggingIn = this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
                 user.password === this.state.password) {
                     return true
-                }})) {
-            this.props.login(this.state)
+                }
+            })
+
+        if (userLoggingIn) {
+            this.props.login(userLoggingIn)
         } else {
             this.setState({
                 error: 'Incorrect Credentials'
