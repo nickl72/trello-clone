@@ -145,7 +145,7 @@ const EditButton = styled(Button)`
     background-color: #e6c60d;
     box-shadow: 0px 5px 0px 0px #cca42b;
     &:hover {
-        background-color: #f3e260
+        background-color: #f3e260;
     }
 `
 
