@@ -73,25 +73,37 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
-            error: null
+            error: null,
+            signUp: false
         }
 
     }
 
-    login = (e) => {
+    login = (e, signUp = false) => {
         e.preventDefault();
         console.log(this.props.users)
+        let error;
 
         if (this.props.users.find((user,i) => {
             if (user.username === this.state.username && 
-                user.password === this.state.password) {
-                    return true
-                }})) {
-            this.props.login(this.state)
+                (user.password === this.state.password || this.state.signUp)) {
+                        return true
+                    }
+        })) {
+            if (this.state.signUp) {
+                error = 'Username is unavailable'
+                this.setState({error})
+            }  else (
+                this.props.login({username: this.state.username})
+            )
         } else {
-            this.setState({
-                error: 'Incorrect Credentials'
-            })
+            
+            if (this.state.username && this.state.password) {
+                this.props.login({username: this.state.username})
+            } else {
+                error = 'Incorrect credentials'
+            }
+            this.setState({error})
         }
 
     }
@@ -109,7 +121,8 @@ class LoginForm extends Component {
                     <TitleP>Log In to <Logo className='not-trello' src='./NotTrello_Whitebg.png' alt='Not Trello Logo' onClick={this.props.notTrello}/>&trade;</TitleP>
                     <Input type='text' placeholder='Username' name='username' onChange={this.handleChange} value={this.state.username} autoComplete='off' autoFocus/>
                     <Input type='password' placeholder='Password' name='password' onChange={this.handleChange} value={this.state.password}/>
-                    <Button type='submit' value='Log In' onClick={(e) => this.login(e)}/>
+                    <Button type='submit' value={this.state.signUp ? 'Sign Up':'Log In'} onClick={(e) => this.login(e)}/>
+                    {!this.state.signUp && <a href='#' onClick={()=>this.setState({signUp: true})}>Don't have an account? Sign Up here!</a>}
                     {this.state.error && <RedP>{this.state.error}</RedP>}
                 </Form>
             </Div>
