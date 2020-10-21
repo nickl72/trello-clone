@@ -24,7 +24,7 @@ const DetailedCard = styled.div`
     flex-wrap: nowrap;
     align-items: center;
     width: 400px;
-    height: 400px;
+    height: 350px;
     border: solid black 1px;
     min-height: 50px;
     margin: 5px auto;
@@ -33,6 +33,8 @@ const DetailedCard = styled.div`
     background: white;
     position: relative;
     animation: ${slideAnimation} .5s;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px black;
     
 
     .close{
@@ -47,7 +49,7 @@ const DetailedCard = styled.div`
         margin: 0 10px;
         font-size: small;
     }
-    h3{
+    .detailedTitle{
         width: 100%;
         margin: 0;
         padding: 7px 0 12px 0;
@@ -66,6 +68,9 @@ const DetailedCard = styled.div`
         padding: 0;
         margin: 0;
         width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
     }
     .detailedDescription {
         padding: 10px;
@@ -73,6 +78,7 @@ const DetailedCard = styled.div`
         border: solid gray 1px;
         border-radius: 2px;
         box-shadow: inset 0px 0px 2px gray;
+        width: 80%;
     }
     .detailedDueDate {
         display: flex;
@@ -80,8 +86,8 @@ const DetailedCard = styled.div`
         justify-content: space-around;
         width: 100%;
         font-size: 12px;
-        background: rgba(211, 211, 211, .6);
-        margin: 0;
+        background: rgba(211, 211, 211, .4);
+        margin: 15px 0;
         padding: 0;
         height: 30px;
         border-top: solid 1px lightgray;
@@ -93,7 +99,7 @@ const DetailedCard = styled.div`
         color: green;
     }
     .today {
-        color: gold;
+        color: #BD903C;
         font-weight: bold;
     }
     .late {
@@ -132,6 +138,7 @@ const MoveButton = styled(Button)`
     &:hover {
         background-color: #fdc788;
     }
+    margin-top: 5px;
 `
 
 const EditButton = styled(Button)`
@@ -171,11 +178,11 @@ function DetailedTask(props) {
     return(
         <Div>
             <DetailedCard>
-                <h3>{props.task.title}</h3>
+                <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
                 <p className="user">Created by: {props.task.user}</p>
                 <form className ="editTaskForm" onSubmit={(e) => props.handleEditTask(e,props.task.taskId, detailedTask)}>
-                    <textarea className="detailedDescription" rows= "5" cols="40" name="description" 
+                    <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
                         <label for="private">Private Task:</label>

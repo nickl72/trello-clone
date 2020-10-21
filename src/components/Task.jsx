@@ -55,7 +55,7 @@ const Card = styled.div`
         justify-content: space-around;
         width: 100%;
         font-size: 12px;
-        background: rgba(211, 211, 211, .6);
+        background: rgba(211, 211, 211, .4);
         margin: 0;
         padding: 0;
         height: 30px;
@@ -68,7 +68,7 @@ const Card = styled.div`
         color: green;
     }
     .today {
-        color: gold;
+        color: #D9B51C;
         font-weight: bold;
     }
     .late {

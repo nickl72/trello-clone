@@ -27,6 +27,9 @@ const Button = styled.button`
     border: none;
     cursor: pointer;
     font-family: jaf-facitweb,Helvetica Neue,Arial,sans-serif;
+    &:hover {        
+        background: linear-gradient(to bottom, #5aac44 0, #519839 100%);
+    }
 `
 
 const Logo = styled.img`
