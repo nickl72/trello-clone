@@ -5,7 +5,39 @@ import Task from './Task'
 
 import { useDrop } from 'react-dnd';
 
+const FormHeader = styled.h2`
+        text-align: center;
+        margin: 10px;
+    `
 
+const StyledList = styled.div`
+    border-radius: 10px;
+    margin: 0;
+    padding-bottom: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+`
+
+const ConditionalStlye = styled.div`
+    margin: 15px;
+    padding: 0;
+    width: 20%;
+    .To-Do {
+        background: #EFB3AB;
+        border: solid #EB5A46;  
+    }
+
+    .In-Progress {
+        background: #F5EA92;
+        border: solid #F2D600;
+    }
+
+    .Complete {
+        background: #90ECC1;
+        border: solid #4CAF54;
+    }
+`
 function List(props) {
     const [listData, setListData] = useState({
         category: props.category,
@@ -13,51 +45,26 @@ function List(props) {
         droppedTask: null
     })
 
-    const FormHeader = styled.h2`
-        text-align: center;
-        margin: 10px;
-    `
-
-    let categoryStyles = '';
+    let className = '';
     switch(listData.category) {
         case "To-Do":
-            categoryStyles = `
-                background: #EFB3AB;
-                border: solid #EB5A46;
-
-            `
-            
+            className = "To-Do"
             break;
         case "In Progress":
-            categoryStyles = `
-                background: #F5EA92;
-                border: solid #F2D600;
-            `
-
+            className = "In-Progress"
             break;
         case "Completed":
-            categoryStyles = `
-                background: #90ECC1;
-                border: solid #4CAF54;
-            `
-
+            className = "Complete"
             break;
         default:
             console.error("Task category not recognized.")
-      }
+        }
+
     
     
     
-    const StyledList = styled.div`
-        border-radius: 10px;
-        margin: 15px;
-        width: 20vw;
-        padding-bottom: 15px;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: flex-start;
-        ${categoryStyles}
-    `
+    
+    
     
     const listItems = [];
 
@@ -88,24 +95,24 @@ function List(props) {
         return null;
     }
 
-    const [{isOver},drop] = useDrop({
+    const drop = useDrop({
         accept: 'task',
         drop: (innerProps) => props.handleDragTask(innerProps.title,listData.category),
         collect: (monitor) => ({
             isOver: !!monitor.isOver()
         })
-    })
+    })[1]
 
     return(
-        <div 
+        <ConditionalStlye 
             ref={drop} 
             id={props.category}
         >
-            <StyledList>
+            <StyledList className={className}>
                 <FormHeader>{props.category}</FormHeader>
                 {listItems}
             </StyledList>
-        </div>
+        </ConditionalStlye>
     )
 }
 

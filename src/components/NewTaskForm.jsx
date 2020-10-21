@@ -13,6 +13,7 @@ const Form = styled.form`
     border-radius: 10px;
     background-color: #E4F0F6;
     height: 100%;
+    width: 20%;
 `
 
 const Submit = styled.input`
@@ -31,18 +32,28 @@ const Submit = styled.input`
         background-color: #5BA4CF;
     }
 `
-
+const FormHolder = styled.div`
+    width:100%;
+    padding: 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+`
 const FormHeader = styled.h2`
     text-align: center;
     margin: 10px;
 `
 
 const Title = styled.input`
-    animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"}
+    animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"};
+    width: 90%;
 `
-
+const TextArea = styled.textarea`
+    width: 90%;
+`
 const Date = styled.input`
-    animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"}
+    animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"};
+    width: 90%;
 `
 
 class NewTaskForm extends Component{
@@ -111,8 +122,9 @@ class NewTaskForm extends Component{
     render(){
         return(
             <Form id="form" onSubmit={(e) => {this.handleCreateAttempt(e)}}>
+                <FormHolder>
                 <FormHeader>New Task</FormHeader>
-                <label for="title">Task Title:</label> 
+                <label htmlFor="title">Task Title:</label> 
                 <Title
                     type="text" name="title" placeholder="Title"
                     badTitle={this.badTitle}
@@ -120,12 +132,12 @@ class NewTaskForm extends Component{
                     onAnimationEnd={() => {this.badTitle=false; this.forceUpdate();}}
                 /> 
                 <br />
-                <label for="description">Task Description:</label>
-                <textarea rows= "5" cols="20" name="description" placeholder="Type description here..."
+                <label htmlFor="description">Task Description:</label>
+                <TextArea rows= "5" cols="20" name="description" placeholder="Type description here..."
                     onChange={this.handleInputChange}>
-                </textarea>
+                </TextArea>
                 <br />
-                <label for="dueDate">Due Date:</label>
+                <label htmlFor="dueDate">Due Date:</label>
                 <Date
                     type="date" name="dueDate"
                     badDate={this.badDate}
@@ -138,7 +150,7 @@ class NewTaskForm extends Component{
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <label for="private">Make Task Private:</label>
+                <label htmlFor="private">Make Task Private:</label>
                 <input type='checkbox' name='private'
                     onChange={(e) => {
                         this.setState({private: !this.state.private})
@@ -146,6 +158,7 @@ class NewTaskForm extends Component{
                     checked={this.state.private}
                 ></input>
                 <Submit type="submit" value="Create Task"></Submit>
+                </FormHolder>
             </Form>
         )
     }
