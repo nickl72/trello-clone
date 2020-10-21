@@ -187,7 +187,7 @@ function DetailedTask(props) {
         })
         setTimeout(function(){setUpdated({
                     show: false
-                    })}, 1000);
+                    })}, 2000);
     }
 
     return(
