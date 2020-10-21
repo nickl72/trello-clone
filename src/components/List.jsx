@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Task from './Task'
 
-
 function List(props) {
     const [listData, setlistData] = useState({
         category: props.category,

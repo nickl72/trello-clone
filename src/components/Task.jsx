@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Draggable from 'react-draggable';
+import ConfirmDelete from "./ConfirmDelete";
 
 const Card = styled.div`
     display: flex;
@@ -25,9 +26,7 @@ const Card = styled.div`
         border-bottom: solid gray 1px;
         border-top: solid 12px lightgray;
         background-color: lightgray;
-        border-radius: 5px 5px 0 0;
-        
-        
+        border-radius: 5px 5px 0 0; 
     }
 
     img{
@@ -104,7 +103,8 @@ const MoveButton = styled(Button)`
 function Task(props) {
     const [taskData, setTaskData] = useState({
         category: props.task.category,
-        newCategory: ""
+        newCategory: "",
+        deleteClick: false
     })
     
     const whenDue = (dueDate) => {
@@ -145,6 +145,22 @@ function Task(props) {
             category: props.task.category
         })
     },[])
+
+    const deleteTaskClick = () => {
+        setTaskData({
+            deleteClick: true,
+            category: props.task.category,
+            newCategory: ""
+        })
+    }
+
+    const cancelClick = () => {
+        setTaskData({
+            deleteClick: false,
+            category: props.task.category,
+            newCategory: "",
+        })
+    }
         
     return(
         <Draggable onDrag = {((e,data) => {
@@ -162,12 +178,12 @@ function Task(props) {
                     {whenDue(props.task.dueDate)}
                 </div>
                 <div className="editActions">
-                <Button onClick = {(e, task) => props.handleDeleteTask(e, props.task)} className="deleteButton"/*data-toggle = "modal" data-target="#confirmDelete"*/>
+                <Button onClick={deleteTaskClick}/*onClick = {(e, task) => props.handleDeleteTask(e, props.task)} className="deleteButton"data-toggle = "modal" data-target="#confirmDelete"*/>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                             </svg>
                             Delete Task
                         </Button>
-                    {/* <button onClick = {(e, task) => props.handleDeleteTask(e, props.task)}>Delete Task</button> */}
+                        {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={cancelClick}/> : null}
                     <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
                         <select name="category" defaultValue = {defaultCategory(taskData.category)}>
                             <option value="To-Do">To-Do</option>
@@ -182,6 +198,7 @@ function Task(props) {
                     </form>
                 </div>
             </Card>
+            
         </Draggable>
     )
     
