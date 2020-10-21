@@ -73,7 +73,7 @@ class LoginForm extends Component {
         this.state = {
             username: null,
             password: null,
-            tasks: [],
+            admin: false,
             error: null
         }
 

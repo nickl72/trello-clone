@@ -24,6 +24,7 @@ class App extends Component{
 
     this.state ={
       users: data.users,
+      tasks: data.tasks,
       user: null,
       loginClick: false,
       notTrello: false,
