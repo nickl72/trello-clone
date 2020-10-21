@@ -27,7 +27,7 @@ const Card = styled.div`
         background-color: lightgray;
         border-radius: 5px 5px 0 0; 
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-content: space-between;
         align-items: flex-end;
 
