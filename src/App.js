@@ -119,7 +119,8 @@ class App extends Component{
 
     if(this.state.user) {
       this.state.tasks.map((task, id) => {
-        if(task.user === this.state.user.username){
+        if(task.user === this.state.user.username ||
+          this.state.user.admin){
           switch(task.category) {
             case "To-Do":
               toDoList.push(task);
