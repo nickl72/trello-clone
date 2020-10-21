@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
+import ConfirmDelete from './ConfirmDelete';
 
 const slideAnimation = keyframes`${zoomIn}`;
 
@@ -41,10 +42,15 @@ const Card = styled.div`
     box-shadow: 0px 0px 8px gray;
     border-radius: 5px;
     background: white;
+    position: relative;
     
 
-
-    h3 {
+    .close{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    h3{
         width: 100%;
         margin: 0;
         padding: 7px 0 12px 0;
@@ -54,8 +60,6 @@ const Card = styled.div`
         border-top: solid 12px lightgray;
         background-color: lightgray;
         border-radius: 5px 5px 0 0;
-        
-        
     }
 
     img{
@@ -193,43 +197,43 @@ function DetailedTask(props) {
     return(
         <Div>
             <Form>
-        <Card>
-            <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>
-            <button onClick={props.closeCard}>x</button>
-            <p className="description">{props.task.description}</p>
-            <div className="dueDate">
-                <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
-                <p>{props.task.dueDate}</p>
-
-                {whenDue(props.task.dueDate)}
-            </div>
-            {props.user ?
-            <div className="editActions">
-                <Button onClick = {(e, task) => props.handleDeleteTask(e, props.task)} className="deleteButton"/*data-toggle = "modal" data-target="#confirmDelete"*/>
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                        <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                    </svg>
-                    Delete Task
-                </Button>
-                <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
-                    <select name="category" defaultValue = {defaultCategory(taskData.category)}>
-                        <option value="To-Do">To-Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                    </select> 
-                    <MoveButton type = "submit" className="moveButton">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrows-move" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                <Card>
+                    <h3>{props.task.title}</h3>
+                    <button className="close" onClick={props.closeCard}>x</button>
+                    <textarea className="description" rows= "5" cols="20" name="description" 
+                        value={props.task.description}></textarea>
+                    <div className="dueDate">
+                        <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
+                        <input type="date" value={props.dueDate}></input>
+                        {whenDue(props.task.dueDate)}
+                    </div>
+                    {props.user ?
+                    <div className="editActions">
+                    <Button onClick={props.deleteTaskClick}>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
-                        Move Task
-                    </MoveButton>
-                </form>
-              </div>
-              :  null }
-                {detailedTask.show ? <DetailedTask task={props.task} closeCard={closeCard}/> : null}
-            </Card>
+                        Delete Task
+                    </Button>
+                    {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={props.cancelClick}/> : null}
+                        <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
+                            <select name="category" defaultValue = {defaultCategory(taskData.category)}>
+                                <option value="To-Do">To-Do</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select> 
+                            <MoveButton type = "submit" className="moveButton">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrows-move" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd" d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                                </svg>
+                                Move Task
+                            </MoveButton>
+                        </form>
+                    </div>
+                    :  null }
+                </Card>
+                    
             </Form>
-            </Div>
+        </Div>
     )
 
 
