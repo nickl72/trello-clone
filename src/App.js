@@ -34,8 +34,18 @@ class App extends Component{
     
   }
 
-  login = (user) => {
-    this.setState({user})
+  login = (user, newUser) => {
+    if (newUser) {
+      const users = this.state.users;
+      users.push(user)
+      this.setState({
+        users,
+        user        
+      })
+
+    } else {
+      this.setState({user})
+    }
   }
 
   handleCreateTask = (e,newTask) => {

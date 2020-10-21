@@ -15,7 +15,6 @@ const Form = styled.form`
     height: 100%;
 `
 
-
 const Submit = styled.input`
     border-radius: 5px;
     border-color: #0C3953;
@@ -32,6 +31,7 @@ const Submit = styled.input`
         background-color: #5BA4CF;
     }
 `
+
 const FormHeader = styled.h2`
     text-align: center;
     margin: 10px;
@@ -40,6 +40,7 @@ const FormHeader = styled.h2`
 const Title = styled.input`
     animation: ${(props) => props.badTitle ? css`${headShakeAnimation} 2s 1` : "none"}
 `
+
 const Date = styled.input`
     animation: ${(props) => props.badDate ? css`${headShakeAnimation} 2s 1` : "none"}
 `
@@ -51,10 +52,12 @@ class NewTaskForm extends Component{
                 title: null,
                 description: null,
                 dueDate: null,
-                category: "To-Do"
+                category: "To-Do",
+                private: true
         }
     }
     handleInputChange = (e) => {
+        console.log(e.target)
         this.setState({
             [e.target.name] : e.target.value
         })
@@ -86,7 +89,8 @@ class NewTaskForm extends Component{
                     title: null,
                     description: null,
                     dueDate: null,
-                    category: "To-Do"
+                    category: "To-Do",
+                    private: true
                 })
             }
         }
@@ -126,7 +130,12 @@ class NewTaskForm extends Component{
                     <option value="To-Do">To-Do</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
-                </select><br/> 
+                </select>
+                <label for="private">Make Task Private:</label>
+                <input type='checkbox' name='private'
+                    onChange={this.handleInputChange}
+                    checked
+                ></input>
                 <Submit type="submit" value="Create Task"></Submit>
             </Form>
         )
