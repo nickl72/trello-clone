@@ -161,7 +161,8 @@ function Task(props) {
         })
     },[])
 
-    const deleteTaskClick = () => {
+    const deleteTaskClick = (e) => {
+        e.preventDefault();
         setTaskData({
             deleteClick: true,
             category: props.task.category,
@@ -224,7 +225,11 @@ function Task(props) {
               :  null }
                 {detailedTask.show ? 
                     <DetailedTask user={props.user} task={props.task} closeCard={closeCard}
-                     deleteTaskClick={deleteTaskClick} cancelClick={cancelClick}/> : null}
+                     deleteTaskClick={deleteTaskClick} cancelClick={cancelClick}
+                     whenDue={whenDue} defaultCategory={defaultCategory}
+                     taskData={taskData} setTaskData={setTaskData}
+                     handleMoveTask={props.handleMoveTask}
+                     handleEditTask={props.handleEditTask}/> : null}
             </Card>
     )
     

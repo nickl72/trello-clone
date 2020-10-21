@@ -7,7 +7,7 @@ const Div = styled.div`
     width: 100%;
     overflow: hidden;
     background-color: rgba(0,0,0,0.4);
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     display: flex;

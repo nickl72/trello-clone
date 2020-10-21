@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
-import ConfirmDelete from './ConfirmDelete';
 
 const slideAnimation = keyframes`${zoomIn}`;
 
@@ -28,6 +27,8 @@ const Form = styled.form`
     color: black;
     text-align: center;
     animation: ${slideAnimation} .5s;
+    width: 50vw;
+    height: 50vh;
 `
 
 const Card = styled.div`
@@ -43,12 +44,20 @@ const Card = styled.div`
     border-radius: 5px;
     background: white;
     position: relative;
+    height: 85%;
     
 
     .close{
         position: absolute;
         top: 0;
         right: 0;
+    }
+    .user{
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0 10px;
+        font-size: small;
     }
     h3{
         width: 100%;
@@ -132,66 +141,42 @@ const MoveButton = styled(Button)`
     }
 `
 
+const EditButton = styled(Button)`
+    background-color: #e6c60d;
+    box-shadow: 0px 5px 0px 0px #cca42b;
+    &:hover {
+        background-color: #f3e260
+    }
+`
+
 function DetailedTask(props) {
-    const [taskData, setTaskData] = useState({
-        category: props.task.category,
-        newCategory: ""
-    })
-
     const [detailedTask, setDetailedTask] = useState({
-        show: false
+        description: props.task.description,
+        dueDate: props.task.dueDate,
+        private: props.task.private
     })
-    
-    const whenDue = (dueDate) => {
-        let today = new Date();
-        let [month, day, year] = [today.getMonth() + 1, today.getDate(), today.getFullYear()];
-        
-        if(day.length < 2) {
-            day = `0${day}`
-        }
-        today = `${year}-${month}-${day}`
-        dueDate = Date.parse(dueDate);
-        today = Date.parse(today)
 
-        if (dueDate > today) {
-            return <p className="onTrack">On Track</p>
-        } else if(dueDate === today) {
-            return <p className="today">Due Today</p>
-        } else if(dueDate < today) {
-            return <p className="late">Past Due</p>
+    const onChange = (e) => {
+        if(props.user){
+            if(e.target.name === "description"){
+                setDetailedTask({
+                    description: e.target.value,
+                    dueDate: detailedTask.dueDate,
+                    private: detailedTask.private
+                })
+            }
+            else if(e.target.name === "dueDate"){
+                setDetailedTask({
+                    description: detailedTask.description,
+                    dueDate: e.target.value,
+                    private: detailedTask.private
+                })
+            }
+            // console.log(detailedTask[targetName]);
+            // setDetailedTask({ 
+            //     [e.target.name] : e.target.value
+            // })
         }
-    }
-    
-    const defaultCategory = (category) => {
-        let displayCategory;
-        switch(category) {
-            case "To-Do":
-                return displayCategory="In Progress";
-            case "In Progress":
-                return displayCategory="Completed";
-            case "Completed":
-                return displayCategory="In Progress";
-        }
-        return displayCategory;
-    }
-
-    useEffect(() => {
-        setTaskData({
-            newCategory: defaultCategory(taskData.category),
-            category: props.task.category
-        })
-    },[])
-        
-    const openCard = () => {
-        setDetailedTask({
-            show: true
-        })
-    }
-
-    const closeCard = () => {
-        setDetailedTask({
-            show: false
-        })
     }
 
     return(
@@ -200,23 +185,33 @@ function DetailedTask(props) {
                 <Card>
                     <h3>{props.task.title}</h3>
                     <button className="close" onClick={props.closeCard}>x</button>
-                    <textarea className="description" rows= "5" cols="20" name="description" 
-                        value={props.task.description}></textarea>
-                    <div className="dueDate">
-                        <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
-                        <input type="date" value={props.dueDate}></input>
-                        {whenDue(props.task.dueDate)}
-                    </div>
+                    <p className="user">Created by: {props.task.user}</p>
+                    <form onSubmit={(e) => props.handleEditTask(e,props.task.taskId, detailedTask)}>
+                        <textarea className="description" rows= "5" cols="50" name="description" 
+                            value={detailedTask.description} onChange={onChange}></textarea>
+                        <div className="dueDate">
+                            <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
+                            <input type="date" name="dueDate" value={detailedTask.dueDate} onChange={onChange}></input>
+                            {props.whenDue(props.task.dueDate)}
+                        </div>
+                        <label for="private">Task Private:</label>
+                        <input type='checkbox' name='private' onChange={() => {props.user && setDetailedTask({description: detailedTask.description, dueDate: detailedTask.dueDate, private: !detailedTask.private})}}
+                            checked={detailedTask.private}
+                        ></input>
+                        {props.user ?
+                            <EditButton><img src='https://www.flaticon.com/svg/static/icons/svg/860/860814.svg' alt="pencil/paper" />
+                            Edit Task</EditButton>
+                        : null }
+                    </form>
                     {props.user ?
-                    <div className="editActions">
+                        <div className="editActions">
                     <Button onClick={props.deleteTaskClick}>
                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
                         Delete Task
                     </Button>
-                    {taskData.deleteClick ? <ConfirmDelete {... props} cancelClick={props.cancelClick}/> : null}
-                        <form onChange={(e)=> {setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, taskData.newCategory)} >
-                            <select name="category" defaultValue = {defaultCategory(taskData.category)}>
+                        <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, props.taskData.newCategory)} >
+                            <select name="category" defaultValue = {props.defaultCategory(props.taskData.category)}>
                                 <option value="To-Do">To-Do</option>
                                 <option value="In Progress">In Progress</option>
                                 <option value="Completed">Completed</option>

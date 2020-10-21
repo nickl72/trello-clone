@@ -84,6 +84,11 @@ class App extends Component{
     })
   }
 
+  handleEditTask = (e, taskId, edits) => {
+    e.preventDefault();
+    console.log(edits);
+  }
+
   handleDragTask = (taskTitle,categoryName) => {
     console.log('Task: '+taskTitle);
     console.log('Category: '+categoryName);
@@ -175,6 +180,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             <List 
               user={this.state.user}
@@ -184,6 +190,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             <List 
               user={this.state.user}
@@ -193,6 +200,7 @@ class App extends Component{
               handleMoveTask={this.handleMoveTask} 
               handleSelectList={this.handleSelectList}
               handleDragTask={this.handleDragTask}
+              handleEditTask={this.handleEditTask}
             />
             
           </Main>

@@ -73,6 +73,7 @@ function List(props) {
                     handleSelectList={props.handleSelectList} 
                     catSelected={props.catSelected}
                     trackDraggedTask={()=>trackDraggedTask(task.title)}
+                    handleEditTask={props.handleEditTask}
                 />
             )
         ))
