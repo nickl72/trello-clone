@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
-
+import Updated from './Updated';
 const slideAnimation = keyframes`${zoomIn}`;
 
 const Div = styled.div`
@@ -150,6 +150,11 @@ const EditButton = styled(Button)`
 `
 
 function DetailedTask(props) {
+
+    const [updated, setUpdated] = useState({
+        show: false
+    })
+
     const [detailedTask, setDetailedTask] = useState({
         description: props.task.description,
         dueDate: props.task.dueDate,
@@ -175,13 +180,23 @@ function DetailedTask(props) {
         }
     }
 
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        setUpdated({
+            show: true
+        })
+        setTimeout(function(){setUpdated({
+                    show: false
+                    })}, 1000);
+    }
+
     return(
         <Div>
             <DetailedCard>
                 <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
                 <p className="user">Created by: {props.task.user}</p>
-                <form className ="editTaskForm" onSubmit={(e) => props.handleEditTask(e,props.task.taskId, detailedTask)}>
+                <form className ="editTaskForm" onSubmit={(e) => {props.handleEditTask(e,props.task.taskId, detailedTask); handleUpdate(e)}} >
                     <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
@@ -223,6 +238,8 @@ function DetailedTask(props) {
                 </div>
                 :  null }
             </DetailedCard>
+            {updated.show ? 
+                    <Updated/> : null}
         </Div>
     )
 
