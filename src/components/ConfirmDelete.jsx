@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styled from 'styled-components';
 
 const Div = styled.div`
-    position: fixed;
+    position: absolute;
     height: 100%;
     width: 100%;
     overflow: hidden;
