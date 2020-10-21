@@ -36,15 +36,19 @@ const Logo = styled.img`
 const Header = (props) => {
     const [loginData, setLoginData] = useState({
         loggedIn: false,
-        // loginClick: false       
+        loginClick: false       
     })
 
     const login = (user, newUser = false) => {
         props.login(user, newUser)
-        setLoginData({
-            loggedIn: !loginData.loggedIn,
-        })
-        props.updateLoginClick(false);
+        
+        setTimeout(() => {
+            setLoginData({
+                loggedIn: !loginData.loggedIn,
+            });
+            props.updateLoginClick(false);
+        }, 450)
+        
     }
 
     const handleClick = (e) => {
@@ -54,12 +58,18 @@ const Header = (props) => {
                 setLoginData({
                     loggedIn: false,
                 })
-                props.updateLoginClick(false);
+                setTimeout(() => {
+                    props.updateLoginClick(false);
+                }, 450)
+                
             } else {
                 setLoginData({
                     loggedIn: loginData.loggedIn,
                 })
-                props.updateLoginClick(!props.loginClick);
+                setTimeout(() => {
+                    props.updateLoginClick(!props.loginClick);
+                }, 450)
+                
             }
         }
     }
@@ -70,7 +80,7 @@ const Header = (props) => {
             <Button onClick={handleClick}>
                 {loginData.loggedIn ? 'Log Out' : 'Log In' }
             </Button>
-            {props.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login} notTrello={props.notTrello}/> : null }
+            {props.loginClick && !loginData.loggedIn? <LoginForm users={props.users} handleClick={handleClick} login={login} notTrello={props.notTrello} loginClick = {props.loginClick}/> : null }
         </AppHeader>
     )
 }
