@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
+import DetailedTask from './DetailedTask';
 
 const headShakeAnimation = keyframes`${headShake}`;
 

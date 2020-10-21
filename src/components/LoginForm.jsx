@@ -80,7 +80,6 @@ class LoginForm extends Component {
 
     login = (e) => {
         e.preventDefault();
-        console.log(this.props.users)
 
         if (this.props.users.find((user,i) => {
             if (user.username === this.state.username && 

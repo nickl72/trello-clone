@@ -1,8 +1,33 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import DetailedTask from './DetailedTask'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import { zoomIn } from 'react-animations';
 
-import { useDrag } from 'react-dnd';
+const slideAnimation = keyframes`${zoomIn}`;
+
+const Div = styled.div`
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px black;
+    color: black;
+    text-align: center;
+    animation: ${slideAnimation} .5s;
+`
 
 const Card = styled.div`
     display: flex;
@@ -103,8 +128,7 @@ const MoveButton = styled(Button)`
     }
 `
 
-
-function Task(props) {
+function DetailedTask(props) {
     const [taskData, setTaskData] = useState({
         category: props.task.category,
         newCategory: ""
@@ -133,14 +157,6 @@ function Task(props) {
             return <p className="late">Past Due</p>
         }
     }
-    
-    const [{isDragging},drag] = useDrag({
-        item: {type: 'task',title: props.task.title},
-        canDrag: props.user ? true : false,
-        collect: monitor => ({
-            isDragging: !!monitor.isDragging()
-        })
-    })
     
     const defaultCategory = (category) => {
         let displayCategory;
@@ -175,8 +191,11 @@ function Task(props) {
     }
 
     return(
-        <Card ref={drag} isDragging={isDragging}>
+        <Div>
+            <Form>
+        <Card>
             <h3 onClick={() => {openCard(props.task)}}>{props.task.title}</h3>
+            <button onClick={props.closeCard}>x</button>
             <p className="description">{props.task.description}</p>
             <div className="dueDate">
                 <img src='https://www.flaticon.com/svg/static/icons/svg/37/37663.svg' alt="clock"/>
@@ -209,8 +228,11 @@ function Task(props) {
               :  null }
                 {detailedTask.show ? <DetailedTask task={props.task} closeCard={closeCard}/> : null}
             </Card>
+            </Form>
+            </Div>
     )
-    
+
+
 }
 
-export default Task;
+export default DetailedTask;
