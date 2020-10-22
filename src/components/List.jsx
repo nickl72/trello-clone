@@ -87,7 +87,6 @@ function List(props) {
     }
 
     function trackDraggedTask(taskTitle) {
-        console.log(taskTitle)
         setListData({
             category: listData.category,
             tasks: listData.tasks,
