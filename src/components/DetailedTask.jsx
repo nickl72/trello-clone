@@ -202,7 +202,12 @@ function DetailedTask(props) {
                 <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
                 <p className="user">Created by: {props.task.user}</p>
-                <form className ="editTaskForm" onSubmit={(e) => {props.handleEditTask(e,props.task.taskId, detailedTask); handleUpdate(e)}} >
+                <form className ="editTaskForm" 
+                    onSubmit={(e) => {
+                        props.handleEditTask(e,props.task.taskId, detailedTask); 
+                        handleUpdate(e)}
+                    } 
+                >
                     <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
@@ -229,7 +234,11 @@ function DetailedTask(props) {
                     Delete Task
                 </Button>
                     <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} 
-                        onSubmit={(e, task) => {props.handleMoveTask(e, props.task, props.taskData.newCategory); props.closeCard();}} >
+                        onSubmit={(e, task) => {
+                            props.handleMoveTask(e, props.task, props.taskData.newCategory); 
+                            props.closeCard();}
+                        }
+                    >
                         <select name="category" defaultValue = {props.defaultCategory(props.taskData.category)}>
                             <option value="To-Do">To-Do</option>
                             <option value="In Progress">In Progress</option>
