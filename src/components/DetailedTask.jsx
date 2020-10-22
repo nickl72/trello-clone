@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
-
+import Updated from './Updated';
 const slideAnimation = keyframes`${zoomIn}`;
 
 const Div = styled.div`
@@ -150,6 +150,11 @@ const EditButton = styled(Button)`
 `
 
 function DetailedTask(props) {
+
+    const [updated, setUpdated] = useState({
+        show: false
+    })
+
     const [detailedTask, setDetailedTask] = useState({
         description: props.task.description,
         dueDate: props.task.dueDate,
@@ -175,6 +180,16 @@ function DetailedTask(props) {
         }
     }
 
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        setUpdated({
+            show: true
+        })
+        setTimeout(function(){
+            setUpdated({show: false})}, 2000);
+    }
+
     const localCloseCard = (e) => {
         if (e.currentTarget === e.target) {
             props.closeCard();
@@ -187,7 +202,12 @@ function DetailedTask(props) {
                 <h3 className="detailedTitle">{props.task.title}</h3>
                 <button className="close" onClick={props.closeCard}>x</button>
                 <p className="user">Created by: {props.task.user}</p>
-                <form className ="editTaskForm" onSubmit={(e) => props.handleEditTask(e,props.task.taskId, detailedTask)}>
+                <form className ="editTaskForm" 
+                    onSubmit={(e) => {
+                        props.handleEditTask(e,props.task.taskId, detailedTask); 
+                        handleUpdate(e)}
+                    } 
+                >
                     <textarea className="detailedDescription" rows= "5" cols="50" name="description" 
                         value={detailedTask.description} onChange={onChange}></textarea>
                     <div className="privateCheckbox" >
@@ -213,7 +233,12 @@ function DetailedTask(props) {
                     </svg>
                     Delete Task
                 </Button>
-                    <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, props.taskData.newCategory)} >
+                    <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} 
+                        onSubmit={(e, task) => {
+                            props.handleMoveTask(e, props.task, props.taskData.newCategory); 
+                            props.closeCard();}
+                        }
+                    >
                         <select name="category" defaultValue = {props.defaultCategory(props.taskData.category)}>
                             <option value="To-Do">To-Do</option>
                             <option value="In Progress">In Progress</option>
@@ -229,6 +254,8 @@ function DetailedTask(props) {
                 </div>
                 :  null }
             </DetailedCard>
+            {updated.show ? 
+                    <Updated/> : null}
         </Div>
     )
 
