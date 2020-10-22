@@ -55,8 +55,6 @@ const Header = (props) => {
     }
 
     const handleClick = (e) => {
-        console.log(e.currentTarget);
-        console.log(e.target);
         if (e.currentTarget === e.target ) {
             if (loginData.loggedIn) {
                 props.login(null)

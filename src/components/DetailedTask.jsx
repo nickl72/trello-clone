@@ -228,7 +228,8 @@ function DetailedTask(props) {
                     </svg>
                     Delete Task
                 </Button>
-                    <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} onSubmit={(e, task) => props.handleMoveTask(e, props.task, props.taskData.newCategory)} >
+                    <form onChange={(e)=> {props.setTaskData({newCategory:e.target.value})}} 
+                        onSubmit={(e, task) => {props.handleMoveTask(e, props.task, props.taskData.newCategory); props.closeCard();}} >
                         <select name="category" defaultValue = {props.defaultCategory(props.taskData.category)}>
                             <option value="To-Do">To-Do</option>
                             <option value="In Progress">In Progress</option>
