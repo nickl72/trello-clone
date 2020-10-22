@@ -196,6 +196,8 @@ function DetailedTask(props) {
         }
     }
 
+    
+
     return(
         <Div onClick={(e) => localCloseCard(e)}>
             <DetailedCard>

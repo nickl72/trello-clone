@@ -198,7 +198,9 @@ function Task(props) {
 
     const localHandleDelete = (e, task) => {
         cancelClick()
-
+        setDetailedTask({
+            show: false
+        })
         props.handleDeleteTask(e, props.task)
     }
         
