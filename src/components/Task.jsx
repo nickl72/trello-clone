@@ -16,7 +16,6 @@ const Card = styled.div`
     box-shadow: 0px 0px 8px gray;
     border-radius: 5px;
     background: white;
-    position: relative;
 
 
     .title-box {
@@ -199,7 +198,9 @@ function Task(props) {
 
     const localHandleDelete = (e, task) => {
         cancelClick()
-
+        setDetailedTask({
+            show: false
+        })
         props.handleDeleteTask(e, props.task)
     }
         
@@ -214,6 +215,8 @@ function Task(props) {
             show: false
         })
     }
+
+    
 
     return(
         <Card ref={drag} isDragging={isDragging} onDoubleClick={() => {openCard(props.task)}}>
